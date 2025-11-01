@@ -10,15 +10,16 @@
         /* 1. التصميم الأساسي والألوان (لجميع الأجهزة) */
         /* ========================================================= */
         :root {
-            --primary-blue: #00004d; /* أزرق داكن جداً (خلفية اللوح) */
-            --accent-gold: #ffcc00;  /* ذهبي ساطع */
-            --light-grey: #e0e0e0;   /* للخلفية الداخلية للوح */
-            --text-dark: #333333;    /* للنصوص العادية */
-            --error-red: #cc0000;    /* للأخطاء */
-            --bg-gradient-start: #1a2a6c; /* أزرق غامق */
-            --bg-gradient-end: #000022; /* أزرق أغمق */
+            --primary-blue: #00004d; 
+            --accent-gold: #ffcc00;  
+            --light-grey: #e0e0e0;   
+            --text-dark: #333333;    
+            --error-red: #cc0000;    
+            --bg-gradient-start: #1a2a6c; 
+            --bg-gradient-end: #000022; 
             --team-red: #d80000;
             --team-blue: #007bff;
+            --secondary-green: #28a745; /* لون جديد لزر كشف الأجوبة */
         }
 
         body {
@@ -116,6 +117,7 @@
             border-radius: 10px;
             border: 3px solid var(--accent-gold);
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            position: relative;
         }
         #team-red-box {
             background-color: var(--team-red);
@@ -133,6 +135,25 @@
             font-size: 2.5em;
             font-weight: 900;
         }
+        
+        /* مؤشر الدور الحالي */
+        .team-score-box.active-turn::after {
+            content: '⮞'; 
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3em;
+            color: var(--accent-gold);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
 
         .game-controls {
             background: var(--primary-blue);
@@ -177,6 +198,7 @@
             align-items: center;
             margin-top: 30px;
             margin-bottom: 10px; 
+            flex-wrap: wrap; /* للسماح للزر الجديد بالانتقال لسطر جديد عند الحاجة */
         }
 
         .strike-btn {
@@ -194,6 +216,26 @@
             color: white;
             transform: translateY(4px) scale(1.03);
             box-shadow: 0 4px #880000;
+        }
+
+        /* تنسيق الزر الجديد */
+        #reveal-all-btn {
+            background-color: var(--secondary-green);
+            color: white;
+            border: 4px solid var(--primary-blue);
+            box-shadow: 0 6px #1e7e34;
+            padding: 18px 35px;
+            font-size: 1.4em;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 25px 15px;
+        }
+        #reveal-all-btn:hover {
+            background-color: #1e7e34;
+            transform: translateY(3px) scale(1.03);
+            box-shadow: 0 3px #1e7e34;
         }
 
 
@@ -263,10 +305,9 @@
         /* تنسيق رقم الإجابة داخل الغطاء */
         .cover .answer-number {
             color: var(--accent-gold);
-            font-size: 2.5em; /* حجم كبير للرقم */
+            font-size: 2.5em; 
             font-weight: 900;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            /* إضافة خط سفلي لتأثير أفضل */
             border-bottom: 5px solid var(--accent-gold); 
             padding-bottom: 5px;
         }
@@ -291,7 +332,7 @@
         }
 
         /* نحتاج لإخفاء النصوص والنقاط فقط، وليس الرقم الموجود داخل الغطاء */
-        .answer-slot > span { /* فقط الـ spans التي هي أبناء مباشرون لـ .answer-slot */
+        .answer-slot > span { 
             opacity: 0;
             transition: opacity 0.4s 0.1s; 
             color: var(--accent-gold); 
@@ -344,7 +385,6 @@
                 margin-bottom: 15px;
             }
 
-            /* لوحة نقاط الفريقين */
             .team-score-box {
                 padding: 10px;
             }
@@ -355,7 +395,6 @@
                 font-size: 2em;
             }
 
-            /* لوحة الإجابات: عمود واحد على الجوال */
             .answers-board {
                 grid-template-columns: 1fr; 
                 gap: 8px;
@@ -375,7 +414,6 @@
                 font-size: 1em; 
             }
 
-            /* أزرار توزيع النقاط: عمودية على الجوال */
             .points-transfer-buttons {
                 flex-direction: column;
                 gap: 8px;
@@ -385,12 +423,11 @@
                 padding: 10px;
             }
 
-            /* أزرار التحكم (الخطأ والسؤال التالي) تكون عمودية */
             .control-buttons {
                 flex-direction: column;
                 gap: 15px;
             }
-            .strike-btn, #next-question-btn {
+            .strike-btn, #next-question-btn, #reveal-all-btn {
                 width: 80%;
                 margin: 5px 0;
                 padding: 15px 30px;
@@ -432,8 +469,8 @@
                 </div>
             </div>
             <div class="points-transfer-buttons">
-                <button id="add-red-btn" class="add-points-btn hidden">إضافة <span id="add-red-score-value">0</span> للفريق الأحمر</button>
-                <button id="add-blue-btn" class="add-points-btn hidden">إضافة <span id="add-blue-score-value">0</span> للفريق الأزرق</button>
+                <button id="add-red-btn" class="add-points-btn hidden">تحويل <span id="add-red-score-value">0</span> للفريق الأحمر</button>
+                <button id="add-blue-btn" class="add-points-btn hidden">تحويل <span id="add-blue-score-value">0</span> للفريق الأزرق</button>
             </div>
         </div>
 
@@ -446,6 +483,7 @@
 
         <div class="control-buttons">
             <button id="next-strike-btn" class="main-btn strike-btn">خطأ (X)</button> 
+            <button id="reveal-all-btn" class="main-btn hidden">كشف الأجوبة (إظهار الكل)</button>
             <button id="next-question-btn" class="main-btn next-btn hidden">السؤال التالي</button>
         </div>
     </div>
@@ -634,6 +672,9 @@
         let strikes = 0; 
         const MAX_STRIKES = 3; 
         
+        // متغير جديد لتحديد الفريق الذي له الدور (red أو blue)
+        let currentTurn = 'red'; 
+        
         // العناصر DOM
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
@@ -644,10 +685,13 @@
         const nextStrikeBtn = document.getElementById('next-strike-btn'); 
         const nextBtn = document.getElementById('next-question-btn');
         const restartBtn = document.getElementById('restart-game-btn');
+        const revealAllBtn = document.getElementById('reveal-all-btn'); // الزر الجديد
         
         // عناصر لوحة النقاط للفريقين
         const scoreRedElement = document.getElementById('score-red');
         const scoreBlueElement = document.getElementById('score-blue');
+        const teamRedBox = document.getElementById('team-red-box');
+        const teamBlueBox = document.getElementById('team-blue-box');
         const currentRoundScoreElement = document.getElementById('current-round-score');
         const addRedBtn = document.getElementById('add-red-btn');
         const addBlueBtn = document.getElementById('add-blue-btn');
@@ -665,19 +709,27 @@
             currentRoundScoreElement.textContent = roundScore;
             addRedScoreValue.textContent = roundScore;
             addBlueScoreValue.textContent = roundScore;
+            
+            // تحديث مؤشر الدور الحالي
+            teamRedBox.classList.remove('active-turn');
+            teamBlueBox.classList.remove('active-turn');
+            if (currentTurn === 'red') {
+                teamRedBox.classList.add('active-turn');
+            } else if (currentTurn === 'blue') {
+                teamBlueBox.classList.add('active-turn');
+            }
         }
 
         function startGame() {
             scoreRed = 0;
             scoreBlue = 0;
             currentQuestionIndex = 0;
+            currentTurn = 'red'; // البدء دائماً بالفريق الأحمر (يمكن تعديله)
             
             startScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden'); 
             
-            roundScore = 0;
-            updateScoreDisplays();
             loadQuestion();
         }
 
@@ -690,7 +742,9 @@
             const currentQ = questions[currentQuestionIndex];
             questionText.textContent = `السؤال ${currentQuestionIndex + 1}/${questions.length}: ${currentQ.question}`;
             answersBoard.innerHTML = ''; 
+            roundScore = 0;
             strikes = 0; 
+            currentTurn = 'red'; // بدء الجولة بالفريق الأحمر
             updateScoreDisplays();
             drawStrikes();
             
@@ -721,6 +775,7 @@
 
             nextStrikeBtn.classList.remove('hidden');
             nextBtn.classList.add('hidden');
+            revealAllBtn.classList.add('hidden');
             addRedBtn.classList.add('hidden');
             addBlueBtn.classList.add('hidden');
         }
@@ -750,9 +805,12 @@
             if (slotElement) {
                 slotElement.classList.add('revealed');
             }
-
+            
+            // إذا تم كشف جميع الإجابات، تنتهي الجولة للفريق الحالي
             const allRevealed = currentQ.answers.every(a => a.isRevealed);
             if (allRevealed) {
+                // إذا تم الكشف بالكامل، يحول الفريق الحالي النقاط مباشرة
+                transferPoints(currentTurn); 
                 endRound(true);
             }
         }
@@ -762,29 +820,52 @@
             drawStrikes();
             
             if (strikes >= MAX_STRIKES) {
-                endRound(false); 
+                // عند الخطأ الثالث:
+                // 1. إيقاف إمكانية الضغط على زر الخطأ
+                nextStrikeBtn.classList.add('hidden');
+                
+                // 2. إظهار أزرار تحويل النقاط (للفريق المنافس ليختار)
+                addRedBtn.classList.remove('hidden');
+                addBlueBtn.classList.remove('hidden');
+                
+                // 3. إظهار زر كشف الأجوبة (لإنهاء الجولة يدوياً)
+                revealAllBtn.classList.remove('hidden'); 
             }
         }
-
-        function endRound(allAnswersFound) {
-            nextStrikeBtn.classList.add('hidden');
+        
+        function revealAllAnswersAndEnd() {
+            // يتم استدعاء هذه الوظيفة عند الضغط على زر "كشف الأجوبة (إظهار الكل)"
             
-            // كشف الإجابات المتبقية
+            // كشف الإجابات المتبقية بدون احتساب نقاطها
             questions[currentQuestionIndex].answers.forEach((ans, index) => {
                 const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
                 if (slotElement) {
                    slotElement.classList.add('revealed');
                 }
             });
+            
+            // تصفير النقاط المؤقتة (فقط للتأكد إذا لم يتم تحويلها لأي فريق)
+            roundScore = 0; 
+            updateScoreDisplays();
+            
+            endRound(true); // إنهاء الجولة والتقدم للسؤال التالي
+        }
 
-            // إظهار أزرار توزيع النقاط
-            addRedBtn.classList.remove('hidden');
-            addBlueBtn.classList.remove('hidden');
+        function endRound(allAnswersFound) {
+            // يتم استدعاء هذه الوظيفة للتقدم للسؤال التالي بعد انتهاء الجولة
+            nextStrikeBtn.classList.add('hidden');
+            revealAllBtn.classList.add('hidden');
+            addRedBtn.classList.add('hidden');
+            addBlueBtn.classList.add('hidden');
             nextBtn.classList.remove('hidden'); 
         }
 
         function transferPoints(team) {
-            if (roundScore === 0) return; 
+            if (roundScore === 0) {
+                // إذا لم تكن هناك نقاط (فشل الفريق المنافس في الإجابة) نكشف الأجوبة وننهي الجولة
+                revealAllAnswersAndEnd();
+                return;
+            }
 
             if (team === 'red') {
                 scoreRed += roundScore;
@@ -794,9 +875,8 @@
             roundScore = 0; // تصفير النقاط المؤقتة (الجولة)
             updateScoreDisplays();
             
-            // إخفاء أزرار الإضافة لمنع الإضافة المزدوجة
-            addRedBtn.classList.add('hidden');
-            addBlueBtn.classList.add('hidden');
+            // إنهاء الجولة تلقائياً بعد إضافة النقاط
+            endRound(true);
         }
 
         function nextQuestion() {
@@ -835,7 +915,11 @@
             nextBtn.addEventListener('click', nextQuestion);
             restartBtn.addEventListener('click', startGame);
             
+            // ربط الزر الجديد
+            revealAllBtn.addEventListener('click', revealAllAnswersAndEnd);
+            
             // أزرار توزيع النقاط
+            // عند الضغط على زر التحويل، يتم تحويل النقاط وإنهاء الجولة فوراً
             addRedBtn.addEventListener('click', () => transferPoints('red'));
             addBlueBtn.addEventListener('click', () => transferPoints('blue'));
 
