@@ -244,6 +244,7 @@
             transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
         }
         
+        /* تصميم غطاء الإجابة */
         .cover {
             position: absolute;
             top: 0;
@@ -259,6 +260,18 @@
             z-index: 10;
         }
 
+        /* تنسيق رقم الإجابة داخل الغطاء */
+        .cover .answer-number {
+            color: var(--accent-gold);
+            font-size: 2.5em; /* حجم كبير للرقم */
+            font-weight: 900;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            /* إضافة خط سفلي لتأثير أفضل */
+            border-bottom: 5px solid var(--accent-gold); 
+            padding-bottom: 5px;
+        }
+
+        /* عند كشف الإجابة */
         .answer-slot.revealed .cover {
             transform: scaleX(0); 
             opacity: 0;
@@ -277,13 +290,14 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        .answer-slot span {
+        /* نحتاج لإخفاء النصوص والنقاط فقط، وليس الرقم الموجود داخل الغطاء */
+        .answer-slot > span { /* فقط الـ spans التي هي أبناء مباشرون لـ .answer-slot */
             opacity: 0;
             transition: opacity 0.4s 0.1s; 
             color: var(--accent-gold); 
         }
 
-        .answer-slot.revealed span {
+        .answer-slot.revealed > span {
             opacity: 1;
         }
 
@@ -689,10 +703,15 @@
                 // تصفير حالة الكشف لضمان البدء من جديد
                 ans.isRevealed = false; 
 
+                // التعديل هنا: إضافة رقم الإجابة داخل الغطاء
+                const answerNumber = index + 1;
+
                 slot.innerHTML = `
                     <span class="answer-text">${ans.text}</span>
                     <span class="answer-points">${ans.points}</span>
-                    <div class="cover"></div> 
+                    <div class="cover">
+                        <span class="answer-number">${answerNumber}</span>
+                    </div> 
                 `;
                 
                 slot.addEventListener('click', () => revealAnswer(index)); 
