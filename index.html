@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي العائلات - إصدار الفريقين</title>
+    
+    <style>
+        /* ========================================================= */
+        /* 1. التصميم الأساسي والألوان (لجميع الأجهزة) */
+        /* ========================================================= */
+        :root {
+            --primary-blue: #00004d; /* أزرق داكن جداً (خلفية اللوح) */
+            --accent-gold: #ffcc00;  /* ذهبي ساطع */
+            --light-grey: #e0e0e0;   /* للخلفية الداخلية للوح */
+            --text-dark: #333333;    /* للنصوص العادية */
+            --error-red: #cc0000;    /* للأخطاء */
+            --bg-gradient-start: #1a2a6c; /* أزرق غامق */
+            --bg-gradient-end: #000022; /* أزرق أغمق */
+            --team-red: #d80000;
+            --team-blue: #007bff;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--light-grey);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            margin: 0;
+            direction: rtl; 
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Family_Feud_2014_set.jpg/1200px-Family_Feud_2014_set.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            opacity: 0.2; 
+            z-index: -1;
+        }
+
+        .screen {
+            text-align: center;
+            padding: 40px;
+            background: var(--light-grey); 
+            color: var(--text-dark);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7); 
+            width: 95%;
+            max-width: 1100px; 
+            border: 6px solid var(--accent-gold); 
+            animation: fadeIn 1s ease-out;
+            position: relative;
+            overflow: auto; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 { 
+            color: var(--primary-blue); 
+            font-size: 2.8em; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 5px; 
+        }
+        
+        .subtitle {
+            font-size: 1.6em;
+            color: var(--text-dark);
+            margin-bottom: 25px; 
+            font-weight: bold;
+        }
+
+        .main-btn {
+            background-color: var(--accent-gold);
+            color: var(--primary-blue);
+            border: 4px solid var(--primary-blue);
+            padding: 18px 35px;
+            font-size: 1.4em;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 25px 15px;
+            box-shadow: 0 6px var(--primary-blue);
+            text-transform: uppercase;
+        }
+        .main-btn:hover {
+            background-color: var(--primary-blue);
+            color: var(--accent-gold);
+            transform: translateY(3px) scale(1.03);
+            box-shadow: 0 3px var(--primary-blue);
+        }
+
+        .score-teams-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        .team-score-box {
+            flex-grow: 1;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 3px solid var(--accent-gold);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        #team-red-box {
+            background-color: var(--team-red);
+            color: white;
+        }
+        #team-blue-box {
+            background-color: var(--team-blue);
+            color: white;
+        }
+        .team-score-box h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .team-score-box .score-value {
+            font-size: 2.5em;
+            font-weight: 900;
+        }
+
+        .game-controls {
+            background: var(--primary-blue);
+            color: var(--accent-gold);
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 3px solid var(--accent-gold);
+            margin-bottom: 30px;
+        }
+
+        .points-transfer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .add-points-btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #add-red-btn {
+            background-color: var(--team-red);
+            color: white;
+            border: 2px solid white;
+        }
+        #add-blue-btn {
+            background-color: var(--team-blue);
+            color: white;
+            border: 2px solid white;
+        }
+        #add-red-btn:hover { background-color: #a00000; }
+        #add-blue-btn:hover { background-color: #0056b3; }
+
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 10px; 
+        }
+
+        .strike-btn {
+            background-color: var(--error-red);
+            color: white;
+            border-color: #990000;
+            box-shadow: 0 8px #880000;
+            padding: 25px 50px; 
+            font-size: 2em; 
+            border-radius: 15px;
+            margin: 0 50px; 
+        }
+        .strike-btn:hover {
+            background-color: #990000;
+            color: white;
+            transform: translateY(4px) scale(1.03);
+            box-shadow: 0 4px #880000;
+        }
+
+
+        .question-container {
+            background: var(--primary-blue);
+            color: var(--accent-gold);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 4px solid var(--accent-gold);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+        }
+        .question-container h1 {
+            color: var(--accent-gold);
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .answers-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
+            gap: 12px;
+            margin: 30px 0;
+            padding: 15px;
+            background: var(--light-grey); 
+            border-radius: 10px;
+            border: 2px solid var(--primary-blue);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        .answer-slot {
+            background-color: var(--primary-blue);
+            color: var(--accent-gold);
+            padding: 15px 20px; 
+            border-radius: 10px;
+            border: 3px solid var(--accent-gold);
+            height: 50px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em; 
+            font-weight: 900; 
+            position: relative;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            overflow: hidden; 
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-blue); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border-radius: 8px;
+            z-index: 10;
+        }
+
+        .answer-slot.revealed .cover {
+            transform: scaleX(0); 
+            opacity: 0;
+        }
+        
+        .answer-slot .answer-text { 
+            text-align: right; 
+            flex-grow: 1; 
+            margin-left: 15px; 
+            font-size: 0.9em; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .answer-slot .answer-points { 
+            text-align: left; 
+            min-width: 40px; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .answer-slot span {
+            opacity: 0;
+            transition: opacity 0.4s 0.1s; 
+            color: var(--accent-gold); 
+        }
+
+        .answer-slot.revealed span {
+            opacity: 1;
+        }
+
+        .strikes {
+            font-size: 3em; 
+            color: var(--error-red);
+            min-height: 50px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .strike-x {
+            display: inline-block;
+            animation: bounce 0.4s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ========================================================= */
+        /* 2. قواعد التصميم المتجاوب (لجعل الشكل غير مشوه على الجوال) */
+        /* ========================================================= */
+        @media (max-width: 600px) {
+            
+            .screen {
+                padding: 15px; 
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2em; 
+            }
+            .subtitle {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+
+            /* لوحة نقاط الفريقين */
+            .team-score-box {
+                padding: 10px;
+            }
+            .team-score-box h2 {
+                font-size: 1.1em;
+            }
+            .team-score-box .score-value {
+                font-size: 2em;
+            }
+
+            /* لوحة الإجابات: عمود واحد على الجوال */
+            .answers-board {
+                grid-template-columns: 1fr; 
+                gap: 8px;
+                padding: 10px;
+            }
+            
+            .answer-slot {
+                height: auto; 
+                min-height: 45px; 
+                font-size: 1.2em;
+            }
+            .answer-slot .answer-text { 
+                font-size: 0.8em; 
+                margin-left: 10px;
+            }
+            .answer-slot .answer-points { 
+                font-size: 1em; 
+            }
+
+            /* أزرار توزيع النقاط: عمودية على الجوال */
+            .points-transfer-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .add-points-btn {
+                width: 100%; 
+                padding: 10px;
+            }
+
+            /* أزرار التحكم (الخطأ والسؤال التالي) تكون عمودية */
+            .control-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .strike-btn, #next-question-btn {
+                width: 80%;
+                margin: 5px 0;
+                padding: 15px 30px;
+                font-size: 1.5em;
+            }
+            
+            .strikes {
+                font-size: 2.5em; 
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" class="screen">
+        <h1>تحدي الفصول</h1>
+        <p class="subtitle">تحدي بين فريقين</p>
+        <button id="start-game-btn" class="main-btn">ابدأ المسابقة</button>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        
+        <div class="score-teams-container">
+            <div id="team-red-box" class="team-score-box">
+                <h2>الفريق الأحمر</h2>
+                <span id="score-red" class="score-value">0</span>
+            </div>
+            <div id="team-blue-box" class="team-score-box">
+                <h2>الفريق الأزرق</h2>
+                <span id="score-blue" class="score-value">0</span>
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>نقاط الجولة الحالية: <span id="current-round-score">0</span></h3>
+                <div id="strikes-display" class="strikes">
+                </div>
+            </div>
+            <div class="points-transfer-buttons">
+                <button id="add-red-btn" class="add-points-btn hidden">إضافة <span id="add-red-score-value">0</span> للفريق الأحمر</button>
+                <button id="add-blue-btn" class="add-points-btn hidden">إضافة <span id="add-blue-score-value">0</span> للفريق الأزرق</button>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <h1 id="question-text"></h1>
+        </div>
+        
+        <div id="answers-board" class="answers-board">
+        </div>
+
+        <div class="control-buttons">
+            <button id="next-strike-btn" class="main-btn strike-btn">خطأ (X)</button> 
+            <button id="next-question-btn" class="main-btn next-btn hidden">السؤال التالي</button>
+        </div>
+    </div>
+
+    <div id="end-screen" class="screen hidden">
+        <h1 id="end-message"></h1>
+        <h2>النتيجة النهائية: الفريق الأحمر <span id="final-score-red">0</span> | الفريق الأزرق <span id="final-score-blue">0</span></h2>
+        <button id="restart-game-btn" class="main-btn">إعادة اللعب</button>
+    </div>
+
+    
+    <script>
+        
+        // =========================================================
+        // 3. البيانات (15 أسئلة Family Feud)
+        // =========================================================
+        const questionsData = [
+            {
+              "id": 1,
+              "question": "شيء يفعله الناس قبل الذهاب للنوم؟",
+              "answers": [
+                {"text": "تنظيف الأسنان", "points": 35, "isRevealed": false},
+                {"text": "تفقد الهاتف/التصفح", "points": 25, "isRevealed": false},
+                {"text": "تغيير الملابس/البيجاما", "points": 15, "isRevealed": false},
+                {"text": "قراءة كتاب", "points": 10, "isRevealed": false},
+                {"text": "ضبط المنبه", "points": 8, "isRevealed": false},
+                {"text": "شرب الماء", "points": 7, "isRevealed": false}
+              ]
+            },
+            {
+              "id": 2,
+              "question": "مهنة تعتقد أن العاملين فيها لديهم أكثر إجازات؟",
+              "answers": [
+                {"text": "المعلم/المدرس", "points": 40, "isRevealed": false},
+                {"text": "الموظف الحكومي", "points": 25, "isRevealed": false},
+                {"text": "الطيار", "points": 15, "isRevealed": false},
+                {"text": "المدير التنفيذي", "points": 10, "isRevealed": false}
+              ]
+            },
+            {
+              "id": 3,
+              "question": "فاكهة نأكلها في فصل الصيف بشكل خاص؟",
+              "answers": [
+                {"text": "البطيخ", "points": 45, "isRevealed": false},
+                {"text": "المانجو", "points": 20, "isRevealed": false},
+                {"text": "العنب", "points": 15, "isRevealed": false},
+                {"text": "الخوخ/البرقوق", "points": 10, "isRevealed": false},
+                {"text": "التين", "points": 5, "isRevealed": false}
+              ]
+            },
+            {
+                "id": 4,
+                "question": "شيء يشتري لونه الأسود عادة؟",
+                "answers": [
+                  {"text": "الإطارات/الكفرات", "points": 30, "isRevealed": false},
+                  {"text": "الكاميرا", "points": 25, "isRevealed": false},
+                  {"text": "البدلة الرسمية", "points": 20, "isRevealed": false},
+                  {"text": "حذاء رسمي", "points": 15, "isRevealed": false},
+                  {"text": "النظارة الشمسية", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 5,
+                "question": "عندما يغضب الرجل، ما هو أول شيء يفعله؟",
+                "answers": [
+                  {"text": "يرفع صوته/يصرخ", "points": 35, "isRevealed": false},
+                  {"text": "يصمت ويهدأ", "points": 25, "isRevealed": false},
+                  {"text": "يخرج من المكان", "points": 20, "isRevealed": false},
+                  {"text": "يلقي باللوم على غيره", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 6,
+                "question": "فيلم كرتوني أو شخصية كرتونية شهيرة؟",
+                "answers": [
+                  {"text": "توم وجيري", "points": 40, "isRevealed": false},
+                  {"text": "ميكي ماوس", "points": 25, "isRevealed": false},
+                  {"text": "سبونج بوب", "points": 15, "isRevealed": false},
+                  {"text": "علاء الدين", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 7,
+                "question": "شيء ينساه الناس غالباً عند السفر؟",
+                "answers": [
+                  {"text": "شاحن الهاتف", "points": 50, "isRevealed": false},
+                  {"text": "فرشاة الأسنان/المعجون", "points": 35, "isRevealed": false},
+                  {"text": "جواز السفر/الهوية", "points": 10, "isRevealed": false},
+                  {"text": "النظارة الشمسية", "points": 5, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 8,
+                "question": "حيوان يخاف منه الكثير من الناس؟",
+                "answers": [
+                  {"text": "الثعبان/الأفعى", "points": 30, "isRevealed": false},
+                  {"text": "الصرصور/الحشرات", "points": 25, "isRevealed": false},
+                  {"text": "الفأر", "points": 20, "isRevealed": false},
+                  {"text": "الكلب", "points": 15, "isRevealed": false},
+                  {"text": "العنكبوت", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 9,
+                "question": "نوع من الأطعمة يجب أن يكون ساخناً جداً عند تقديمه؟",
+                "answers": [
+                  {"text": "الشوربة/الحساء", "points": 35, "isRevealed": false},
+                  {"text": "البيتزا", "points": 25, "isRevealed": false},
+                  {"text": "الرز/الباستا", "points": 20, "isRevealed": false},
+                  {"text": "المشروبات الساخنة (الشاي/القهوة)", "points": 10, "isRevealed": false},
+                  {"text": "المقليات/البطاطس", "points": 5, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 10,
+                "question": "مكان عام يتوقع فيه الناس أن يكون هادئاً؟",
+                "answers": [
+                  {"text": "المكتبة", "points": 35, "isRevealed": false},
+                  {"text": "المسجد/المعبد", "points": 25, "isRevealed": false},
+                  {"text": "المتحف", "points": 20, "isRevealed": false},
+                  {"text": "المستشفى/عيادة الطبيب", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 11,
+                "question": "شيء تضعه في محفظتك/جيبك قبل الخروج من المنزل؟",
+                "answers": [
+                  {"text": "الهاتف", "points": 40, "isRevealed": false},
+                  {"text": "المفاتيح", "points": 30, "isRevealed": false},
+                  {"text": "النقود/البطاقات", "points": 20, "isRevealed": false},
+                  {"text": "مناديل ورقية", "points": 10, "isRevealed": false}
+                ]
+            },
+             {
+                "id": 12,
+                "question": "أحد أقاربك تزوره في الأعياد بشكل أساسي؟",
+                "answers": [
+                  {"text": "الأجداد (الجد والجدة)", "points": 35, "isRevealed": false},
+                  {"text": "العم/الخال", "points": 30, "isRevealed": false},
+                  {"text": "العمة/الخالة", "points": 20, "isRevealed": false},
+                  {"text": "أولاد العمومة", "points": 10, "isRevealed": false}
+                ]
+            },
+             {
+                "id": 13,
+                "question": "نوع من الملابس يرتديه الرجال والنساء؟",
+                "answers": [
+                  {"text": "البنطال (الجينز)", "points": 45, "isRevealed": false},
+                  {"text": "القميص (التيشيرت)", "points": 30, "isRevealed": false},
+                  {"text": "الجاكيت/المعطف", "points": 15, "isRevealed": false},
+                  {"text": "البيجاما", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 14,
+                "question": "مكان عام تقف فيه في طابور طويل؟",
+                "answers": [
+                  {"text": "البنك", "points": 40, "isRevealed": false},
+                  {"text": "المطار (تفتيش/جوازات)", "points": 30, "isRevealed": false},
+                  {"text": "السوبر ماركت/البقالة", "points": 20, "isRevealed": false},
+                  {"text": "المطعم (لطلب الوجبة)", "points": 10, "isRevealed": false}
+                ]
+            },
+            {
+                "id": 15,
+                "question": "كلمة نقولها عند رؤية شخص لم نره منذ زمن طويل؟",
+                "answers": [
+                  {"text": "ياهلا/أهلاً وسهلاً", "points": 35, "isRevealed": false},
+                  {"text": "كيف حالك؟", "points": 25, "isRevealed": false},
+                  {"text": "ما أروع هذه المفاجأة!", "points": 20, "isRevealed": false},
+                  {"text": "لقد اشتقت لك", "points": 10, "isRevealed": false}
+                ]
+            }
+        ];
+
+
+        // =========================================================
+        // 4. المتغيرات الأساسية ومنطق النقاط
+        // =========================================================
+        
+        let questions = questionsData; 
+        let currentQuestionIndex = 0;
+        let scoreRed = 0; 
+        let scoreBlue = 0; 
+        let roundScore = 0; 
+        let strikes = 0; 
+        const MAX_STRIKES = 3; 
+        
+        // العناصر DOM
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const endScreen = document.getElementById('end-screen');
+        const answersBoard = document.getElementById('answers-board');
+        const questionText = document.getElementById('question-text');
+        const strikesDisplay = document.getElementById('strikes-display');
+        const nextStrikeBtn = document.getElementById('next-strike-btn'); 
+        const nextBtn = document.getElementById('next-question-btn');
+        const restartBtn = document.getElementById('restart-game-btn');
+        
+        // عناصر لوحة النقاط للفريقين
+        const scoreRedElement = document.getElementById('score-red');
+        const scoreBlueElement = document.getElementById('score-blue');
+        const currentRoundScoreElement = document.getElementById('current-round-score');
+        const addRedBtn = document.getElementById('add-red-btn');
+        const addBlueBtn = document.getElementById('add-blue-btn');
+        const addRedScoreValue = document.getElementById('add-red-score-value');
+        const addBlueScoreValue = document.getElementById('add-blue-score-value');
+
+
+        // =========================================================
+        // 5. إدارة اللعبة والوظائف
+        // =========================================================
+
+        function updateScoreDisplays() {
+            scoreRedElement.textContent = scoreRed;
+            scoreBlueElement.textContent = scoreBlue;
+            currentRoundScoreElement.textContent = roundScore;
+            addRedScoreValue.textContent = roundScore;
+            addBlueScoreValue.textContent = roundScore;
+        }
+
+        function startGame() {
+            scoreRed = 0;
+            scoreBlue = 0;
+            currentQuestionIndex = 0;
+            
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden'); 
+            
+            roundScore = 0;
+            updateScoreDisplays();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endGame(true);
+                return;
+            }
+
+            const currentQ = questions[currentQuestionIndex];
+            questionText.textContent = `السؤال ${currentQuestionIndex + 1}/${questions.length}: ${currentQ.question}`;
+            answersBoard.innerHTML = ''; 
+            strikes = 0; 
+            updateScoreDisplays();
+            drawStrikes();
+            
+            // بناء خانات الإجابات
+            currentQ.answers.forEach((ans, index) => {
+                const slot = document.createElement('div');
+                slot.className = 'answer-slot';
+                slot.setAttribute('data-index', index);
+                
+                // تصفير حالة الكشف لضمان البدء من جديد
+                ans.isRevealed = false; 
+
+                slot.innerHTML = `
+                    <span class="answer-text">${ans.text}</span>
+                    <span class="answer-points">${ans.points}</span>
+                    <div class="cover"></div> 
+                `;
+                
+                slot.addEventListener('click', () => revealAnswer(index)); 
+                
+                answersBoard.appendChild(slot);
+            });
+
+            nextStrikeBtn.classList.remove('hidden');
+            nextBtn.classList.add('hidden');
+            addRedBtn.classList.add('hidden');
+            addBlueBtn.classList.add('hidden');
+        }
+
+        function drawStrikes() {
+            strikesDisplay.innerHTML = '';
+            for (let i = 0; i < strikes; i++) {
+                const x = document.createElement('span');
+                x.className = 'strike-x';
+                x.textContent = '❌';
+                strikesDisplay.appendChild(x);
+            }
+        }
+
+        function revealAnswer(index) {
+            const currentQ = questions[currentQuestionIndex];
+            const ans = currentQ.answers[index];
+            
+            if (ans.isRevealed) return; 
+
+            ans.isRevealed = true;
+
+            roundScore += ans.points; // إضافة النقاط للنقاط المؤقتة
+            updateScoreDisplays();
+
+            const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
+            if (slotElement) {
+                slotElement.classList.add('revealed');
+            }
+
+            const allRevealed = currentQ.answers.every(a => a.isRevealed);
+            if (allRevealed) {
+                endRound(true);
+            }
+        }
+
+        function handleStrike() {
+            strikes++;
+            drawStrikes();
+            
+            if (strikes >= MAX_STRIKES) {
+                endRound(false); 
+            }
+        }
+
+        function endRound(allAnswersFound) {
+            nextStrikeBtn.classList.add('hidden');
+            
+            // كشف الإجابات المتبقية
+            questions[currentQuestionIndex].answers.forEach((ans, index) => {
+                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
+                if (slotElement) {
+                   slotElement.classList.add('revealed');
+                }
+            });
+
+            // إظهار أزرار توزيع النقاط
+            addRedBtn.classList.remove('hidden');
+            addBlueBtn.classList.remove('hidden');
+            nextBtn.classList.remove('hidden'); 
+        }
+
+        function transferPoints(team) {
+            if (roundScore === 0) return; 
+
+            if (team === 'red') {
+                scoreRed += roundScore;
+            } else if (team === 'blue') {
+                scoreBlue += roundScore;
+            }
+            roundScore = 0; // تصفير النقاط المؤقتة (الجولة)
+            updateScoreDisplays();
+            
+            // إخفاء أزرار الإضافة لمنع الإضافة المزدوجة
+            addRedBtn.classList.add('hidden');
+            addBlueBtn.classList.add('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function endGame(completedAll) {
+            gameScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            document.getElementById('final-score-red').textContent = scoreRed;
+            document.getElementById('final-score-blue').textContent = scoreBlue;
+
+            let winnerMsg;
+            if (scoreRed > scoreBlue) {
+                winnerMsg = "تهانينا! الفريق الأحمر هو الفائز!";
+            } else if (scoreBlue > scoreRed) {
+                winnerMsg = "تهانينا! الفريق الأزرق هو الفائز!";
+            } else {
+                winnerMsg = "تعادل مثير! النتيجة متساوية!";
+            }
+
+            document.getElementById('end-message').textContent = winnerMsg;
+        }
+
+
+        // =========================================================
+        // 6. تهيئة المستمعين (Event Listeners)
+        // =========================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // ربط زر "ابدأ المسابقة" ببدء اللعبة
+            document.getElementById('start-game-btn').addEventListener('click', startGame);
+            
+            nextStrikeBtn.addEventListener('click', handleStrike); 
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', startGame);
+            
+            // أزرار توزيع النقاط
+            addRedBtn.addEventListener('click', () => transferPoints('red'));
+            addBlueBtn.addEventListener('click', () => transferPoints('blue'));
+
+            // تهيئة أولية
+            updateScoreDisplays();
+        });
+    </script>
+</body>
+</html>
