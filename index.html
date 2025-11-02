@@ -140,7 +140,7 @@
 
         
         /* ========================================================= */
-        /* شاشة عرض الأخطاء الكبيرة في المنتصف - التعديلات الجوهرية هنا */
+        /* شاشة عرض الأخطاء الكبيرة في المنتصف */
         /* ========================================================= */
         #strike-flash-container {
             position: fixed;
@@ -305,7 +305,7 @@
         }
 
         /* ========================================================= */
-        /* لوحة السرقة (Steal Panel) */
+        /* لوحة السرقة (Steal Panel) - تم تعديل محتواها في HTML */
         /* ========================================================= */
         .steal-panel {
             background: var(--primary-blue);
@@ -321,11 +321,8 @@
             gap: 15px;
         }
         .steal-buttons button {
-            background-color: var(--secondary-green);
+            background-color: var(--error-red); /* زر الخطأ */
             border: 2px solid white;
-        }
-        .steal-buttons button:nth-child(2) { 
-            background-color: var(--error-red);
         }
 
         /* ========================================================= */
@@ -406,10 +403,10 @@
             </div>
             
             <div id="steal-panel" class="steal-panel hidden">
-                <h3>فرصة السرقة: الفريق <span id="stealing-team-name"></span> عليه إعطاء الإجابة</h3>
-                <div class="steal-buttons">
-                    <button id="steal-success-btn" class="main-btn">إجابة صحيحة (سرقة)</button>
-                    <button id="steal-fail-btn" class="main-btn">إجابة خاطئة (خطأ)</button>
+                <h3>فرصة السرقة: الفريق <span id="stealing-team-name"></span> عليه إعطاء إجابة</h3>
+                <div class="steal-buttons" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+                    <p style="font-size: 1.2em; margin: 0;">اختر إجابة صحيحة من اللوحة أو اضغط:</p>
+                    <button id="steal-fail-btn" class="main-btn" style="background-color: var(--error-red);">إجابة خاطئة (خطأ)</button>
                 </div>
             </div>
 
@@ -528,6 +525,7 @@
         const MAX_STRIKES = 3;
         let currentTurn = 'none'; // الفريق الذي بدأ الجولة
         let stealingTeam = null; 
+        let stealingMode = false; // **متغير جديد: حالة السرقة**
         
         // العناصر DOM
         const startScreen = document.getElementById('start-screen');
@@ -548,8 +546,7 @@
         // عناصر السرقة
         const stealPanel = document.getElementById('steal-panel');
         const stealingTeamNameElement = document.getElementById('stealing-team-name');
-        const stealSuccessBtn = document.getElementById('steal-success-btn');
-        const stealFailBtn = document.getElementById('steal-fail-btn');
+        const stealFailBtn = document.getElementById('steal-fail-btn'); // تم إبقاء زر الخطأ فقط
         
         // المؤثرات الصوتية (قد تحتاج إلى تفعيل سماعاتك أو إذن تشغيل الصوت)
         const correctSound = new Audio('https://www.soundjay.com/misc/sounds/success-sound-effect-1.mp3'); 
@@ -567,10 +564,13 @@
             // تحديث مؤشر الدور الحالي
             document.getElementById('team-red-box').classList.remove('active-turn');
             document.getElementById('team-blue-box').classList.remove('active-turn');
-            if (currentTurn === 'red') {
+            if (currentTurn === 'red' && !stealingMode) {
                 document.getElementById('team-red-box').classList.add('active-turn');
-            } else if (currentTurn === 'blue') {
+            } else if (currentTurn === 'blue' && !stealingMode) {
                 document.getElementById('team-blue-box').classList.add('active-turn');
+            } else if (stealingMode) { // تسليط الضوء على الفريق السارق
+                const activeStealBox = stealingTeam === 'red' ? 'team-red-box' : 'team-blue-box';
+                document.getElementById(activeStealBox).classList.add('active-turn');
             }
         }
 
@@ -579,6 +579,7 @@
             scoreBlue = 0;
             currentQuestionIndex = 0;
             currentTurn = 'none'; 
+            stealingMode = false;
             questions.forEach(q => q.answers.forEach(a => a.isRevealed = false));
             
             startScreen.classList.add('hidden');
@@ -611,6 +612,7 @@
             strikes = 0;
             stealingTeam = null;
             currentTurn = 'none';
+            stealingMode = false; // إعادة تعيين
             updateScoreDisplays();
             
             nextStrikeBtn.classList.add('hidden');
@@ -653,46 +655,61 @@
             // تفعيل النقر على الإجابات
             document.querySelectorAll('.answer-slot').forEach((slot, index) => {
                 slot.style.pointerEvents = 'auto';
-                slot.addEventListener('click', () => revealAnswer(index));
+                // إزالة أي مستمعات قديمة قبل إضافة الجديد
+                const newSlot = slot.cloneNode(true);
+                slot.parentNode.replaceChild(newSlot, slot);
+                newSlot.addEventListener('click', () => revealAnswer(index));
             });
         }
 
-        /**
-         * وظيفة عرض تأثير الخطأ في المنتصف (مع الإخفاء بعد نصف ثانية)
-         * @param {string} symbol - الرمز المراد عرضه (❌ أو ❌❌ أو ❌❌❌)
-         */
         function flashStrike(symbol) {
-            
-            // 1. إزالة كلاس الإخفاء لضمان الظهور
             strikeFlashContainer.classList.remove('hidden'); 
-            
-            // 2. تحديث عدد علامات الخطأ
             strikeFlashContainer.textContent = symbol;
-            
-            // 3. تشغيل الصوت
             strikeSound.play(); 
 
-            // 4. إعادة تعيين الأنيمايشن لضمان التشغيل في كل مرة
             strikeFlashContainer.style.animation = 'none';
-            void strikeFlashContainer.offsetWidth; // Force reflow
+            void strikeFlashContainer.offsetWidth; 
             
-            // 5. تطبيق الأنيمايشن الجديد (لمدة 0.5 ثانية)
             strikeFlashContainer.style.animation = 'strikeFlash 0.5s forwards'; 
             
-            // 6. الإخفاء بعد 500 مللي ثانية
             setTimeout(() => {
                 strikeFlashContainer.classList.add('hidden');
             }, 500); 
         }
 
+        // تم تعديل هذه الدالة لاستيعاب وضع السرقة
         function revealAnswer(index) {
-            // إخفاء الوميض فوراً عند الإجابة الصحيحة
+            // إخفاء الوميض فوراً
             strikeFlashContainer.classList.add('hidden'); 
 
             const currentQ = questions[currentQuestionIndex];
             const ans = currentQ.answers[index];
             
-            if (ans.isRevealed || strikes >= MAX_STRIKES) return;
+            if (ans.isRevealed) return;
+            
+            // 1. **منطق السرقة (Stealing Mode)**
+            if (stealingMode) {
+                // إجابة صحيحة من الفريق السارق
+                ans.isRevealed = true;
+                roundScore += ans.points; 
+                correctSound.play(); 
+                updateScoreDisplays();
+                
+                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
+                if (slotElement) {
+                    slotElement.classList.add('revealed');
+                }
+                
+                // السرقة تمت بنجاح: تحويل النقاط وإنهاء الجولة فوراً
+                transferPoints(stealingTeam);
+                stealingMode = false;
+                stealPanel.classList.add('hidden');
+                endRound();
+                return; 
+            }
+
+            // 2. **المنطق العادي (كشف الإجابات للفريق الأصلي)**
+            if (strikes >= MAX_STRIKES) return; 
 
             ans.isRevealed = true;
             roundScore += ans.points; 
@@ -713,32 +730,37 @@
 
         function handleStrike() {
             
-            // التأكد من إزالة الوميض السابق قبل بدء الجديد
             strikeFlashContainer.classList.add('hidden');
             
             if (strikes >= MAX_STRIKES) return; 
 
             strikes++;
             
-            // **التعديل هنا:** إرسال عدد الأخطاء لتكرار الرمز
             const strikeSymbol = '❌'.repeat(strikes);
             flashStrike(strikeSymbol); 
 
             updateScoreDisplays(); 
             
             if (strikes >= MAX_STRIKES) {
-                // الخطأ الثالث: تفعيل فرصة السرقة للفريق الآخر
                 initiateStealOpportunity();
             }
         }
         
         function initiateStealOpportunity() {
-            // إخفاء الوميض بشكل دائم عند بداية السرقة
             strikeFlashContainer.classList.add('hidden'); 
             
-            document.querySelectorAll('.answer-slot').forEach(slot => {
-                slot.style.pointerEvents = 'none';
+            stealingMode = true; // **تفعيل وضع السرقة**
+            
+            // تفعيل النقر على الأجوبة غير المكشوفة
+            document.querySelectorAll('.answer-slot').forEach((slot, index) => {
+                const currentQ = questions[currentQuestionIndex];
+                if (!currentQ.answers[index].isRevealed) {
+                     slot.style.pointerEvents = 'auto'; // تفعيل النقر على الأجوبة المتبقية
+                } else {
+                     slot.style.pointerEvents = 'none'; // تعطيل النقر على الأجوبة المكشوفة
+                }
             });
+
             nextStrikeBtn.disabled = true;
             revealAllBtn.disabled = true;
 
@@ -747,32 +769,33 @@
 
             stealingTeamNameElement.textContent = stealingTeamName;
             stealPanel.classList.remove('hidden');
+            updateScoreDisplays(); // لتحديث مؤشر الدور إلى الفريق السارق
         }
 
-        function resolveSteal(isSuccessful) {
+        // تم تعديل هذه الدالة للسرقة الفاشلة فقط
+        function resolveStealFail() {
+            stealingMode = false;
             stealPanel.classList.add('hidden');
             
-            if (isSuccessful) {
-                transferPoints(stealingTeam);
-                correctSound.play();
+            // إعادة تعطيل النقر على جميع الأجوبة بعد فشل السرقة
+            document.querySelectorAll('.answer-slot').forEach(slot => {
+                slot.style.pointerEvents = 'none';
+            });
+
+            // ❌ عرض X إضافي
+            flashStrike('❌');
+            
+            // منح النقاط للفريق الأصلي وإنهاء الجولة
+            setTimeout(() => {
+                transferPoints(currentTurn); 
                 endRound(); 
-            } else {
-                // السرقة فاشلة: عرض X إضافي ثم منح النقاط للفريق الأصلي وإنهاء الجولة
-                
-                // عرض X إضافي كبير
-                flashStrike('❌');
-                
-                // منح النقاط للفريق الأصلي بعد التأخير البسيط
-                setTimeout(() => {
-                    transferPoints(currentTurn); 
-                    endRound(); 
-                }, 500); 
-            }
+            }, 500); 
         }
 
         function endRound() {
-            // إخفاء شاشة الوميض بشكل دائم عند نهاية الجولة
             strikeFlashContainer.classList.add('hidden'); 
+            
+            stealingMode = false; // إنهاء وضع السرقة
             
             // كشف أي إجابات متبقية
              questions[currentQuestionIndex].answers.forEach((ans, index) => {
@@ -788,6 +811,7 @@
             nextStrikeBtn.classList.add('hidden');
             revealAllBtn.classList.add('hidden');
             nextBtn.classList.remove('hidden');
+            updateScoreDisplays(); // لإزالة مؤشر الدور النشط
         }
         
         function transferPoints(team) {
@@ -803,7 +827,6 @@
         }
 
         function revealAllAnswersAndEnd() {
-            // إخفاء الوميض بشكل دائم
             strikeFlashContainer.classList.add('hidden'); 
             
             roundScore = 0;
@@ -844,6 +867,7 @@
             roundScore = 0;
             strikes = 0;
             currentTurn = 'none';
+            stealingMode = false;
             updateScoreDisplays();
             
             endScreen.classList.add('hidden');
@@ -867,9 +891,8 @@
             document.getElementById('restart-game-btn').addEventListener('click', restartGame);
             revealAllBtn.addEventListener('click', revealAllAnswersAndEnd);
             
-            // الأزرار تم ربطها بـ resolveSteal
-            stealSuccessBtn.addEventListener('click', () => resolveSteal(true));
-            stealFailBtn.addEventListener('click', () => resolveSteal(false));
+            // ربط زر السرقة الفاشلة بالدالة الجديدة
+            stealFailBtn.addEventListener('click', resolveStealFail); 
 
             updateScoreDisplays();
             startScreen.classList.remove('hidden');
