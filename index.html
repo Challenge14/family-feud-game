@@ -10,13 +10,13 @@
         /* 1. التصميم الأساسي والألوان (لجميع الأجهزة) */
         /* ========================================================= */
         :root {
-            --primary-blue: #00004d; 
-            --accent-gold: #ffcc00;  
-            --light-grey: #e0e0e0;   
-            --text-dark: #333333;    
-            --error-red: #cc0000;    
-            --bg-gradient-start: #1a2a6c; 
-            --bg-gradient-end: #000022; 
+            --primary-blue: #00004d;
+            --accent-gold: #ffcc00;
+            --light-grey: #e0e0e0;
+            --text-dark: #333333;
+            --error-red: #cc0000;
+            --bg-gradient-start: #1a2a6c;
+            --bg-gradient-end: #000022;
             --team-red: #d80000;
             --team-blue: #007bff;
             --secondary-green: #28a745; /* لون جديد لزر كشف الأجوبة */
@@ -29,9 +29,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; 
+            min-height: 100vh;
             margin: 0;
-            direction: rtl; 
+            direction: rtl;
             padding: 20px;
             position: relative;
         }
@@ -43,25 +43,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Family_Feud_2014_set.jpg/1200px-Family_Feud_2014_set.jpg') no-repeat center center fixed; 
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Family_Feud_2014_set.jpg/1200px-Family_Feud_2014_set.jpg') no-repeat center center fixed;
             background-size: cover;
-            opacity: 0.2; 
+            opacity: 0.2;
             z-index: -1;
         }
 
         .screen {
             text-align: center;
             padding: 40px;
-            background: var(--light-grey); 
+            background: var(--light-grey);
             color: var(--text-dark);
             border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7); 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
             width: 95%;
-            max-width: 1100px; 
-            border: 6px solid var(--accent-gold); 
+            max-width: 1100px;
+            border: 6px solid var(--accent-gold);
             animation: fadeIn 1s ease-out;
             position: relative;
-            overflow: auto; 
+            overflow: auto;
         }
 
         @keyframes fadeIn {
@@ -69,17 +69,17 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        h1 { 
-            color: var(--primary-blue); 
-            font-size: 2.8em; 
+        h1 {
+            color: var(--primary-blue);
+            font-size: 2.8em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 5px; 
+            margin-bottom: 5px;
         }
         
         .subtitle {
             font-size: 1.6em;
             color: var(--text-dark);
-            margin-bottom: 25px; 
+            margin-bottom: 25px;
             font-weight: bold;
         }
 
@@ -138,7 +138,7 @@
         
         /* مؤشر الدور الحالي */
         .team-score-box.active-turn::after {
-            content: '⮞'; 
+            content: '⮞';
             position: absolute;
             right: 10px;
             top: 50%;
@@ -197,8 +197,8 @@
             justify-content: center;
             align-items: center;
             margin-top: 30px;
-            margin-bottom: 10px; 
-            flex-wrap: wrap; /* للسماح للزر الجديد بالانتقال لسطر جديد عند الحاجة */
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
         .strike-btn {
@@ -206,10 +206,10 @@
             color: white;
             border-color: #990000;
             box-shadow: 0 8px #880000;
-            padding: 25px 50px; 
-            font-size: 2em; 
+            padding: 25px 50px;
+            font-size: 2em;
             border-radius: 15px;
-            margin: 0 50px; 
+            margin: 0 50px;
         }
         .strike-btn:hover {
             background-color: #990000;
@@ -257,11 +257,11 @@
 
         .answers-board {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 12px;
             margin: 30px 0;
             padding: 15px;
-            background: var(--light-grey); 
+            background: var(--light-grey);
             border-radius: 10px;
             border: 2px solid var(--primary-blue);
             box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
@@ -270,19 +270,19 @@
         .answer-slot {
             background-color: var(--primary-blue);
             color: var(--accent-gold);
-            padding: 15px 20px; 
+            padding: 15px 20px;
             border-radius: 10px;
             border: 3px solid var(--accent-gold);
-            height: 50px; 
+            height: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.4em; 
-            font-weight: 900; 
+            font-size: 1.4em;
+            font-weight: 900;
             position: relative;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
             cursor: pointer;
-            overflow: hidden; 
+            overflow: hidden;
             transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
         }
         
@@ -293,11 +293,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--primary-blue); 
+            background-color: var(--primary-blue);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-radius: 8px;
             z-index: 10;
         }
@@ -305,37 +305,37 @@
         /* تنسيق رقم الإجابة داخل الغطاء */
         .cover .answer-number {
             color: var(--accent-gold);
-            font-size: 2.5em; 
+            font-size: 2.5em;
             font-weight: 900;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            border-bottom: 5px solid var(--accent-gold); 
+            border-bottom: 5px solid var(--accent-gold);
             padding-bottom: 5px;
         }
 
         /* عند كشف الإجابة */
         .answer-slot.revealed .cover {
-            transform: scaleX(0); 
+            transform: scaleX(0);
             opacity: 0;
         }
         
-        .answer-slot .answer-text { 
-            text-align: right; 
-            flex-grow: 1; 
-            margin-left: 15px; 
-            font-size: 0.9em; 
+        .answer-slot .answer-text {
+            text-align: right;
+            flex-grow: 1;
+            margin-left: 15px;
+            font-size: 0.9em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        .answer-slot .answer-points { 
-            text-align: left; 
-            min-width: 40px; 
+        .answer-slot .answer-points {
+            text-align: left;
+            min-width: 40px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         /* نحتاج لإخفاء النصوص والنقاط فقط، وليس الرقم الموجود داخل الغطاء */
-        .answer-slot > span { 
+        .answer-slot > span {
             opacity: 0;
-            transition: opacity 0.4s 0.1s; 
-            color: var(--accent-gold); 
+            transition: opacity 0.4s 0.1s;
+            color: var(--accent-gold);
         }
 
         .answer-slot.revealed > span {
@@ -343,7 +343,7 @@
         }
 
         .strikes {
-            font-size: 3em; 
+            font-size: 3em;
             color: var(--error-red);
             min-height: 50px;
             font-weight: bold;
@@ -373,12 +373,12 @@
         @media (max-width: 600px) {
             
             .screen {
-                padding: 15px; 
+                padding: 15px;
                 max-width: 100%;
             }
             
             h1 {
-                font-size: 2.2em; 
+                font-size: 2.2em;
             }
             .subtitle {
                 font-size: 1.2em;
@@ -396,22 +396,22 @@
             }
 
             .answers-board {
-                grid-template-columns: 1fr; 
+                grid-template-columns: 1fr;
                 gap: 8px;
                 padding: 10px;
             }
             
             .answer-slot {
-                height: auto; 
-                min-height: 45px; 
+                height: auto;
+                min-height: 45px;
                 font-size: 1.2em;
             }
-            .answer-slot .answer-text { 
-                font-size: 0.8em; 
+            .answer-slot .answer-text {
+                font-size: 0.8em;
                 margin-left: 10px;
             }
-            .answer-slot .answer-points { 
-                font-size: 1em; 
+            .answer-slot .answer-points {
+                font-size: 1em;
             }
 
             .points-transfer-buttons {
@@ -419,7 +419,7 @@
                 gap: 8px;
             }
             .add-points-btn {
-                width: 100%; 
+                width: 100%;
                 padding: 10px;
             }
 
@@ -435,7 +435,7 @@
             }
             
             .strikes {
-                font-size: 2.5em; 
+                font-size: 2.5em;
                 gap: 10px;
             }
         }
@@ -469,8 +469,8 @@
                 </div>
             </div>
             <div class="points-transfer-buttons">
-                <button id="add-red-btn" class="add-points-btn hidden">تحويل <span id="add-red-score-value">0</span> للفريق الأحمر</button>
-                <button id="add-blue-btn" class="add-points-btn hidden">تحويل <span id="add-blue-score-value">0</span> للفريق الأزرق</button>
+                <button id="add-red-btn" class="add-points-btn">تحويل <span id="add-red-score-value">0</span> للفريق الأحمر</button>
+                <button id="add-blue-btn" class="add-points-btn">تحويل <span id="add-blue-score-value">0</span> للفريق الأزرق</button>
             </div>
         </div>
 
@@ -482,8 +482,8 @@
         </div>
 
         <div class="control-buttons">
-            <button id="next-strike-btn" class="main-btn strike-btn">خطأ (X)</button> 
-            <button id="reveal-all-btn" class="main-btn hidden">كشف الأجوبة (إظهار الكل)</button>
+            <button id="next-strike-btn" class="main-btn strike-btn">خطأ (X)</button>
+            <button id="reveal-all-btn" class="main-btn">كشف الأجوبة (إظهار الكل)</button>
             <button id="next-question-btn" class="main-btn next-btn hidden">السؤال التالي</button>
         </div>
     </div>
@@ -538,123 +538,123 @@
                 "id": 4,
                 "question": "شيء يشتري لونه الأسود عادة؟",
                 "answers": [
-                  {"text": "الإطارات/الكفرات", "points": 30, "isRevealed": false},
-                  {"text": "الكاميرا", "points": 25, "isRevealed": false},
-                  {"text": "البدلة الرسمية", "points": 20, "isRevealed": false},
-                  {"text": "حذاء رسمي", "points": 15, "isRevealed": false},
-                  {"text": "النظارة الشمسية", "points": 10, "isRevealed": false}
+                    {"text": "الإطارات/الكفرات", "points": 30, "isRevealed": false},
+                    {"text": "الكاميرا", "points": 25, "isRevealed": false},
+                    {"text": "البدلة الرسمية", "points": 20, "isRevealed": false},
+                    {"text": "حذاء رسمي", "points": 15, "isRevealed": false},
+                    {"text": "النظارة الشمسية", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 5,
                 "question": "عندما يغضب الرجل، ما هو أول شيء يفعله؟",
                 "answers": [
-                  {"text": "يرفع صوته/يصرخ", "points": 35, "isRevealed": false},
-                  {"text": "يصمت ويهدأ", "points": 25, "isRevealed": false},
-                  {"text": "يخرج من المكان", "points": 20, "isRevealed": false},
-                  {"text": "يلقي باللوم على غيره", "points": 10, "isRevealed": false}
+                    {"text": "يرفع صوته/يصرخ", "points": 35, "isRevealed": false},
+                    {"text": "يصمت ويهدأ", "points": 25, "isRevealed": false},
+                    {"text": "يخرج من المكان", "points": 20, "isRevealed": false},
+                    {"text": "يلقي باللوم على غيره", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 6,
                 "question": "فيلم كرتوني أو شخصية كرتونية شهيرة؟",
                 "answers": [
-                  {"text": "توم وجيري", "points": 40, "isRevealed": false},
-                  {"text": "ميكي ماوس", "points": 25, "isRevealed": false},
-                  {"text": "سبونج بوب", "points": 15, "isRevealed": false},
-                  {"text": "علاء الدين", "points": 10, "isRevealed": false}
+                    {"text": "توم وجيري", "points": 40, "isRevealed": false},
+                    {"text": "ميكي ماوس", "points": 25, "isRevealed": false},
+                    {"text": "سبونج بوب", "points": 15, "isRevealed": false},
+                    {"text": "علاء الدين", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 7,
                 "question": "شيء ينساه الناس غالباً عند السفر؟",
                 "answers": [
-                  {"text": "شاحن الهاتف", "points": 50, "isRevealed": false},
-                  {"text": "فرشاة الأسنان/المعجون", "points": 35, "isRevealed": false},
-                  {"text": "جواز السفر/الهوية", "points": 10, "isRevealed": false},
-                  {"text": "النظارة الشمسية", "points": 5, "isRevealed": false}
+                    {"text": "شاحن الهاتف", "points": 50, "isRevealed": false},
+                    {"text": "فرشاة الأسنان/المعجون", "points": 35, "isRevealed": false},
+                    {"text": "جواز السفر/الهوية", "points": 10, "isRevealed": false},
+                    {"text": "النظارة الشمسية", "points": 5, "isRevealed": false}
                 ]
             },
             {
                 "id": 8,
                 "question": "حيوان يخاف منه الكثير من الناس؟",
                 "answers": [
-                  {"text": "الثعبان/الأفعى", "points": 30, "isRevealed": false},
-                  {"text": "الصرصور/الحشرات", "points": 25, "isRevealed": false},
-                  {"text": "الفأر", "points": 20, "isRevealed": false},
-                  {"text": "الكلب", "points": 15, "isRevealed": false},
-                  {"text": "العنكبوت", "points": 10, "isRevealed": false}
+                    {"text": "الثعبان/الأفعى", "points": 30, "isRevealed": false},
+                    {"text": "الصرصور/الحشرات", "points": 25, "isRevealed": false},
+                    {"text": "الفأر", "points": 20, "isRevealed": false},
+                    {"text": "الكلب", "points": 15, "isRevealed": false},
+                    {"text": "العنكبوت", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 9,
                 "question": "نوع من الأطعمة يجب أن يكون ساخناً جداً عند تقديمه؟",
                 "answers": [
-                  {"text": "الشوربة/الحساء", "points": 35, "isRevealed": false},
-                  {"text": "البيتزا", "points": 25, "isRevealed": false},
-                  {"text": "الرز/الباستا", "points": 20, "isRevealed": false},
-                  {"text": "المشروبات الساخنة (الشاي/القهوة)", "points": 10, "isRevealed": false},
-                  {"text": "المقليات/البطاطس", "points": 5, "isRevealed": false}
+                    {"text": "الشوربة/الحساء", "points": 35, "isRevealed": false},
+                    {"text": "البيتزا", "points": 25, "isRevealed": false},
+                    {"text": "الرز/الباستا", "points": 20, "isRevealed": false},
+                    {"text": "المشروبات الساخنة (الشاي/القهوة)", "points": 10, "isRevealed": false},
+                    {"text": "المقليات/البطاطس", "points": 5, "isRevealed": false}
                 ]
             },
             {
                 "id": 10,
                 "question": "مكان عام يتوقع فيه الناس أن يكون هادئاً؟",
                 "answers": [
-                  {"text": "المكتبة", "points": 35, "isRevealed": false},
-                  {"text": "المسجد/المعبد", "points": 25, "isRevealed": false},
-                  {"text": "المتحف", "points": 20, "isRevealed": false},
-                  {"text": "المستشفى/عيادة الطبيب", "points": 10, "isRevealed": false}
+                    {"text": "المكتبة", "points": 35, "isRevealed": false},
+                    {"text": "المسجد/المعبد", "points": 25, "isRevealed": false},
+                    {"text": "المتحف", "points": 20, "isRevealed": false},
+                    {"text": "المستشفى/عيادة الطبيب", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 11,
                 "question": "شيء تضعه في محفظتك/جيبك قبل الخروج من المنزل؟",
                 "answers": [
-                  {"text": "الهاتف", "points": 40, "isRevealed": false},
-                  {"text": "المفاتيح", "points": 30, "isRevealed": false},
-                  {"text": "النقود/البطاقات", "points": 20, "isRevealed": false},
-                  {"text": "مناديل ورقية", "points": 10, "isRevealed": false}
+                    {"text": "الهاتف", "points": 40, "isRevealed": false},
+                    {"text": "المفاتيح", "points": 30, "isRevealed": false},
+                    {"text": "النقود/البطاقات", "points": 20, "isRevealed": false},
+                    {"text": "مناديل ورقية", "points": 10, "isRevealed": false}
                 ]
             },
              {
                 "id": 12,
                 "question": "أحد أقاربك تزوره في الأعياد بشكل أساسي؟",
                 "answers": [
-                  {"text": "الأجداد (الجد والجدة)", "points": 35, "isRevealed": false},
-                  {"text": "العم/الخال", "points": 30, "isRevealed": false},
-                  {"text": "العمة/الخالة", "points": 20, "isRevealed": false},
-                  {"text": "أولاد العمومة", "points": 10, "isRevealed": false}
+                    {"text": "الأجداد (الجد والجدة)", "points": 35, "isRevealed": false},
+                    {"text": "العم/الخال", "points": 30, "isRevealed": false},
+                    {"text": "العمة/الخالة", "points": 20, "isRevealed": false},
+                    {"text": "أولاد العمومة", "points": 10, "isRevealed": false}
                 ]
             },
              {
                 "id": 13,
                 "question": "نوع من الملابس يرتديه الرجال والنساء؟",
                 "answers": [
-                  {"text": "البنطال (الجينز)", "points": 45, "isRevealed": false},
-                  {"text": "القميص (التيشيرت)", "points": 30, "isRevealed": false},
-                  {"text": "الجاكيت/المعطف", "points": 15, "isRevealed": false},
-                  {"text": "البيجاما", "points": 10, "isRevealed": false}
+                    {"text": "البنطال (الجينز)", "points": 45, "isRevealed": false},
+                    {"text": "القميص (التيشيرت)", "points": 30, "isRevealed": false},
+                    {"text": "الجاكيت/المعطف", "points": 15, "isRevealed": false},
+                    {"text": "البيجاما", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 14,
                 "question": "مكان عام تقف فيه في طابور طويل؟",
                 "answers": [
-                  {"text": "البنك", "points": 40, "isRevealed": false},
-                  {"text": "المطار (تفتيش/جوازات)", "points": 30, "isRevealed": false},
-                  {"text": "السوبر ماركت/البقالة", "points": 20, "isRevealed": false},
-                  {"text": "المطعم (لطلب الوجبة)", "points": 10, "isRevealed": false}
+                    {"text": "البنك", "points": 40, "isRevealed": false},
+                    {"text": "المطار (تفتيش/جوازات)", "points": 30, "isRevealed": false},
+                    {"text": "السوبر ماركت/البقالة", "points": 20, "isRevealed": false},
+                    {"text": "المطعم (لطلب الوجبة)", "points": 10, "isRevealed": false}
                 ]
             },
             {
                 "id": 15,
                 "question": "كلمة نقولها عند رؤية شخص لم نره منذ زمن طويل؟",
                 "answers": [
-                  {"text": "ياهلا/أهلاً وسهلاً", "points": 35, "isRevealed": false},
-                  {"text": "كيف حالك؟", "points": 25, "isRevealed": false},
-                  {"text": "ما أروع هذه المفاجأة!", "points": 20, "isRevealed": false},
-                  {"text": "لقد اشتقت لك", "points": 10, "isRevealed": false}
+                    {"text": "ياهلا/أهلاً وسهلاً", "points": 35, "isRevealed": false},
+                    {"text": "كيف حالك؟", "points": 25, "isRevealed": false},
+                    {"text": "ما أروع هذه المفاجأة!", "points": 20, "isRevealed": false},
+                    {"text": "لقد اشتقت لك", "points": 10, "isRevealed": false}
                 ]
             }
         ];
@@ -664,16 +664,16 @@
         // 4. المتغيرات الأساسية ومنطق النقاط
         // =========================================================
         
-        let questions = questionsData; 
+        let questions = questionsData;
         let currentQuestionIndex = 0;
-        let scoreRed = 0; 
-        let scoreBlue = 0; 
-        let roundScore = 0; 
-        let strikes = 0; 
-        const MAX_STRIKES = 3; 
+        let scoreRed = 0;
+        let scoreBlue = 0;
+        let roundScore = 0;
+        let strikes = 0;
+        const MAX_STRIKES = 3;
         
         // متغير جديد لتحديد الفريق الذي له الدور (red أو blue)
-        let currentTurn = 'red'; 
+        let currentTurn = 'red';
         
         // العناصر DOM
         const startScreen = document.getElementById('start-screen');
@@ -682,10 +682,11 @@
         const answersBoard = document.getElementById('answers-board');
         const questionText = document.getElementById('question-text');
         const strikesDisplay = document.getElementById('strikes-display');
-        const nextStrikeBtn = document.getElementById('next-strike-btn'); 
+        const nextStrikeBtn = document.getElementById('next-strike-btn');
         const nextBtn = document.getElementById('next-question-btn');
         const restartBtn = document.getElementById('restart-game-btn');
-        const revealAllBtn = document.getElementById('reveal-all-btn'); // الزر الجديد
+        const revealAllBtn = document.getElementById('reveal-all-btn');
+        const startGameBtn = document.getElementById('start-game-btn');
         
         // عناصر لوحة النقاط للفريقين
         const scoreRedElement = document.getElementById('score-red');
@@ -700,7 +701,7 @@
 
 
         // =========================================================
-        // 5. إدارة اللعبة والوظائف
+        // 5. إدارة اللعبة والوظائف (المنطق المعدل)
         // =========================================================
 
         function updateScoreDisplays() {
@@ -710,6 +711,10 @@
             addRedScoreValue.textContent = roundScore;
             addBlueScoreValue.textContent = roundScore;
             
+            // التعديل: إزالة الإخفاء - أزرار الإضافة مرئية دائماً
+            addRedBtn.classList.remove('hidden');
+            addBlueBtn.classList.remove('hidden');
+
             // تحديث مؤشر الدور الحالي
             teamRedBox.classList.remove('active-turn');
             teamBlueBox.classList.remove('active-turn');
@@ -724,27 +729,29 @@
             scoreRed = 0;
             scoreBlue = 0;
             currentQuestionIndex = 0;
-            currentTurn = 'red'; // البدء دائماً بالفريق الأحمر (يمكن تعديله)
+            currentTurn = 'red';
+            // التأكد من تصفير حالة الكشف في البيانات قبل البدء
+            questions.forEach(q => q.answers.forEach(a => a.isRevealed = false));
             
             startScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden'); 
+            gameScreen.classList.remove('hidden');
             
             loadQuestion();
         }
 
         function loadQuestion() {
             if (currentQuestionIndex >= questions.length) {
-                endGame(true);
+                endGame();
                 return;
             }
 
             const currentQ = questions[currentQuestionIndex];
             questionText.textContent = `السؤال ${currentQuestionIndex + 1}/${questions.length}: ${currentQ.question}`;
-            answersBoard.innerHTML = ''; 
+            answersBoard.innerHTML = '';
             roundScore = 0;
-            strikes = 0; 
-            currentTurn = 'red'; // بدء الجولة بالفريق الأحمر
+            strikes = 0;
+            currentTurn = (currentQuestionIndex % 2 === 0) ? 'red' : 'blue'; // بدء الجولة بالفريق بالتناوب
             updateScoreDisplays();
             drawStrikes();
             
@@ -755,9 +762,8 @@
                 slot.setAttribute('data-index', index);
                 
                 // تصفير حالة الكشف لضمان البدء من جديد
-                ans.isRevealed = false; 
+                ans.isRevealed = false;
 
-                // التعديل هنا: إضافة رقم الإجابة داخل الغطاء
                 const answerNumber = index + 1;
 
                 slot.innerHTML = `
@@ -765,19 +771,19 @@
                     <span class="answer-points">${ans.points}</span>
                     <div class="cover">
                         <span class="answer-number">${answerNumber}</span>
-                    </div> 
+                    </div>
                 `;
                 
-                slot.addEventListener('click', () => revealAnswer(index)); 
+                slot.addEventListener('click', () => revealAnswer(index));
                 
                 answersBoard.appendChild(slot);
             });
 
             nextStrikeBtn.classList.remove('hidden');
             nextBtn.classList.add('hidden');
-            revealAllBtn.classList.add('hidden');
-            addRedBtn.classList.add('hidden');
-            addBlueBtn.classList.add('hidden');
+            revealAllBtn.classList.remove('hidden'); // إظهار زر كشف الأجوبة يدوياً دائماً
+            
+            // أزرار الإضافة مرئية دائماً بواسطة updateScoreDisplays
         }
 
         function drawStrikes() {
@@ -794,10 +800,9 @@
             const currentQ = questions[currentQuestionIndex];
             const ans = currentQ.answers[index];
             
-            if (ans.isRevealed) return; 
+            if (ans.isRevealed) return;
 
             ans.isRevealed = true;
-
             roundScore += ans.points; // إضافة النقاط للنقاط المؤقتة
             updateScoreDisplays();
 
@@ -806,125 +811,107 @@
                 slotElement.classList.add('revealed');
             }
             
-            // إذا تم كشف جميع الإجابات، تنتهي الجولة للفريق الحالي
-            const allRevealed = currentQ.answers.every(a => a.isRevealed);
-            if (allRevealed) {
-                // إذا تم الكشف بالكامل، يحول الفريق الحالي النقاط مباشرة
-                transferPoints(currentTurn); 
-                endRound(true);
-            }
+            // التعديل: إلغاء التحويل التلقائي للنقاط عند كشف كل الإجابات
+            // يجب على المستخدم الضغط على زر التحويل يدوياً
         }
 
         function handleStrike() {
+            if (strikes >= MAX_STRIKES) {
+                return; // لا تضف المزيد من الأخطاء
+            }
+
             strikes++;
             drawStrikes();
             
+            // هنا يمكنك تبديل مؤشر الدور إذا أردت أن يعبر عن من عليه الإجابة
+            currentTurn = (currentTurn === 'red') ? 'blue' : 'red';
+            
             if (strikes >= MAX_STRIKES) {
-                // عند الخطأ الثالث:
-                // 1. إيقاف إمكانية الضغط على زر الخطأ
-                nextStrikeBtn.classList.add('hidden');
-                
-                // 2. إظهار أزرار تحويل النقاط (للفريق المنافس ليختار)
-                addRedBtn.classList.remove('hidden');
-                addBlueBtn.classList.remove('hidden');
-                
-                // 3. إظهار زر كشف الأجوبة (لإنهاء الجولة يدوياً)
-                revealAllBtn.classList.remove('hidden'); 
+                nextStrikeBtn.classList.add('hidden'); // إخفاء زر الخطأ بعد 3 أخطاء
             }
+
+            updateScoreDisplays();
         }
         
-        function revealAllAnswersAndEnd() {
-            // يتم استدعاء هذه الوظيفة عند الضغط على زر "كشف الأجوبة (إظهار الكل)"
-            
-            // كشف الإجابات المتبقية بدون احتساب نقاطها
-            questions[currentQuestionIndex].answers.forEach((ans, index) => {
-                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
-                if (slotElement) {
-                   slotElement.classList.add('revealed');
-                }
-            });
-            
-            // تصفير النقاط المؤقتة (فقط للتأكد إذا لم يتم تحويلها لأي فريق)
-            roundScore = 0; 
-            updateScoreDisplays();
-            
-            endRound(true); // إنهاء الجولة والتقدم للسؤال التالي
-        }
-
-        function endRound(allAnswersFound) {
-            // يتم استدعاء هذه الوظيفة للتقدم للسؤال التالي بعد انتهاء الجولة
-            nextStrikeBtn.classList.add('hidden');
-            revealAllBtn.classList.add('hidden');
-            addRedBtn.classList.add('hidden');
-            addBlueBtn.classList.add('hidden');
-            nextBtn.classList.remove('hidden'); 
-        }
-
+        // الوظيفة المسؤولة عن نقل النقاط وإنهاء الجولة (تُستدعى بالضغط على أزرار الإضافة)
         function transferPoints(team) {
-            if (roundScore === 0) {
-                // إذا لم تكن هناك نقاط (فشل الفريق المنافس في الإجابة) نكشف الأجوبة وننهي الجولة
-                revealAllAnswersAndEnd();
-                return;
-            }
-
             if (team === 'red') {
                 scoreRed += roundScore;
             } else if (team === 'blue') {
                 scoreBlue += roundScore;
             }
-            roundScore = 0; // تصفير النقاط المؤقتة (الجولة)
+            roundScore = 0; // تصفير النقاط المؤقتة
             updateScoreDisplays();
             
-            // إنهاء الجولة تلقائياً بعد إضافة النقاط
-            endRound(true);
+            endRound();
         }
 
-        function nextQuestion() {
-            currentQuestionIndex++;
-            loadQuestion();
+        function revealAllAnswersAndEnd() {
+            // كشف الإجابات المتبقية (دون تحويل نقاط)
+            questions[currentQuestionIndex].answers.forEach((ans, index) => {
+                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
+                if (slotElement && !ans.isRevealed) {
+                   slotElement.classList.add('revealed');
+                }
+            });
+            
+            // تصفير النقاط المؤقتة في حالة عدم تحويلها قبل كشف الكل
+            if (roundScore > 0) {
+                 roundScore = 0;
+                 updateScoreDisplays();
+            }
+            
+            endRound(); // إنهاء الجولة والتقدم للسؤال التالي
         }
 
-        function endGame(completedAll) {
+        function endRound() {
+            // إنهاء الجولة وتجهيز واجهة المستخدم للسؤال التالي
+            nextStrikeBtn.classList.add('hidden');
+            revealAllBtn.classList.add('hidden');
+            // إخفاء أزرار الإضافة بشكل مؤقت لجعل الزر الوحيد المتاح هو "السؤال التالي"
+            addRedBtn.classList.add('hidden');
+            addBlueBtn.classList.add('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+
+        function endGame() {
             gameScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
+            
             document.getElementById('final-score-red').textContent = scoreRed;
             document.getElementById('final-score-blue').textContent = scoreBlue;
-
-            let winnerMsg;
+            
+            let endMessage;
             if (scoreRed > scoreBlue) {
-                winnerMsg = "تهانينا! الفريق الأحمر هو الفائز!";
+                endMessage = 'تهانينا! الفريق الأحمر هو الفائز!';
             } else if (scoreBlue > scoreRed) {
-                winnerMsg = "تهانينا! الفريق الأزرق هو الفائز!";
+                endMessage = 'تهانينا! الفريق الأزرق هو الفائز!';
             } else {
-                winnerMsg = "تعادل مثير! النتيجة متساوية!";
+                endMessage = 'تعادل مثير! لا يوجد فائز!';
             }
-
-            document.getElementById('end-message').textContent = winnerMsg;
+            document.getElementById('end-message').textContent = endMessage;
         }
 
-
         // =========================================================
-        // 6. تهيئة المستمعين (Event Listeners)
+        // 6. ربط الأحداث (Event Listeners)
         // =========================================================
 
         document.addEventListener('DOMContentLoaded', () => {
-            // ربط زر "ابدأ المسابقة" ببدء اللعبة
-            document.getElementById('start-game-btn').addEventListener('click', startGame);
-            
-            nextStrikeBtn.addEventListener('click', handleStrike); 
-            nextBtn.addEventListener('click', nextQuestion);
+            startGameBtn.addEventListener('click', startGame);
             restartBtn.addEventListener('click', startGame);
-            
-            // ربط الزر الجديد
+
+            nextStrikeBtn.addEventListener('click', handleStrike);
             revealAllBtn.addEventListener('click', revealAllAnswersAndEnd);
-            
-            // أزرار توزيع النقاط
-            // عند الضغط على زر التحويل، يتم تحويل النقاط وإنهاء الجولة فوراً
+
+            // ربط أزرار الإضافة بالدالة المعدلة
             addRedBtn.addEventListener('click', () => transferPoints('red'));
             addBlueBtn.addEventListener('click', () => transferPoints('blue'));
 
-            // تهيئة أولية
-            updateScoreDisplays();
+            // عند ضغط زر السؤال التالي، التقدم للجولة القادمة
+            nextBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                loadQuestion();
+            });
         });
     </script>
 </body>
