@@ -7,7 +7,7 @@
     
     <style>
         /* ========================================================= */
-        /* 1. التصميم الأساسي والألوان */
+        /* 1. التصميم الأساسي والألوان (لم تتغير) */
         /* ========================================================= */
         :root {
             --primary-blue: #00004d;
@@ -29,7 +29,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 90vh; /* تم رفعها قليلاً */
             margin: 0;
             direction: rtl;
             padding: 20px;
@@ -39,7 +39,7 @@
 
         .screen {
             text-align: center;
-            padding: 40px;
+            padding: 30px 40px; /* تم رفعها قليلاً */
             background: var(--light-grey);
             color: var(--text-dark);
             border-radius: 15px;
@@ -53,7 +53,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             height: auto;
-            min-height: 80vh;
+            min-height: 75vh; /* تم رفعها قليلاً */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -92,7 +92,7 @@
             border-radius: 10px;
             transition: all 0.3s ease;
             font-weight: bold;
-            margin: 25px 15px;
+            margin: 15px 15px; 
             box-shadow: 0 6px var(--primary-blue);
         }
         .main-btn:hover:not([disabled]) {
@@ -107,9 +107,7 @@
         }
 
 
-        /* ========================================================= */
-        /* شاشة الفاصل (Intermission Screen) */
-        /* ========================================================= */
+        /* شاشة الفاصل */
         #intermission-screen {
             background: var(--primary-blue);
             color: white;
@@ -139,9 +137,7 @@
         }
 
         
-        /* ========================================================= */
-        /* شاشة عرض الأخطاء الكبيرة في المنتصف */
-        /* ========================================================= */
+        /* شاشة عرض الأخطاء الكبيرة */
         #strike-flash-container {
             position: fixed;
             top: 0;
@@ -154,10 +150,8 @@
             justify-content: center;
             align-items: center;
             color: white;
-            /* حجم خط كبير جداً يغطي الشاشة */
             font-size: min(60vw, 60vh); 
             font-weight: 900;
-            /* تأثير ظل أحمر لزيادة الوهج */
             text-shadow: 0 0 20px var(--error-red), 0 0 50px var(--error-red), 0 0 10px black; 
             white-space: nowrap; 
             transform: scale(1.0); 
@@ -165,7 +159,6 @@
             transition: opacity 0.1s ease-in; 
         }
 
-        /* تم تعديل مدة الأنيمايشن إلى 0.5s ليتوافق مع الإخفاء التلقائي */
         @keyframes strikeFlash {
             0% { opacity: 0; transform: scale(1.0) rotate(0deg); }
             20% { opacity: 0.8; transform: scale(1.08) rotate(-1deg); } 
@@ -196,11 +189,10 @@
             background-color: var(--team-blue);
             color: white;
         }
-        /* مؤشر الدور الحالي */
         .team-score-box.active-turn::after {
             content: '⮞';
             position: absolute;
-            right: 10px;
+            right: 1:0px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 3em;
@@ -223,7 +215,6 @@
             margin-bottom: 30px;
         }
         
-        /* إخفاء خانة السؤال */
         .question-container {
             visibility: hidden;
             height: 0;
@@ -235,7 +226,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 12px;
-            margin: 30px 0;
+            margin: 15px 0; 
             padding: 15px;
             background: var(--light-grey);
             border-radius: 10px;
@@ -304,9 +295,7 @@
             margin: 0;
         }
 
-        /* ========================================================= */
-        /* لوحة السرقة (Steal Panel) - تم تعديل محتواها في HTML */
-        /* ========================================================= */
+        /* لوحة السرقة */
         .steal-panel {
             background: var(--primary-blue);
             color: white;
@@ -321,18 +310,16 @@
             gap: 15px;
         }
         .steal-buttons button {
-            background-color: var(--error-red); /* زر الخطأ */
+            background-color: var(--error-red); 
             border: 2px solid white;
         }
 
-        /* ========================================================= */
         /* أزرار اختيار الفريق البادئ */
-        /* ========================================================= */
         #select-start-team-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 15px;
             margin-bottom: 20px;
         }
         #select-start-team-buttons .team-start-btn {
@@ -363,12 +350,24 @@
         
         /* التصميم المتجاوب */
         @media (max-width: 600px) {
-            .screen { padding: 15px; }
+            .screen { 
+                padding: 10px 15px; 
+                min-height: 80vh; 
+            }
             h1 { font-size: 2.2em; }
             .team-score-box h2 { font-size: 1.1em; }
             .team-score-box .score-value { font-size: 2em; }
-            .answers-board { grid-template-columns: 1fr; gap: 8px; }
-            .strike-btn, #reveal-all-btn, .team-start-btn { width: 80%; margin: 5px 0; padding: 15px 30px; font-size: 1.5em; }
+            .answers-board { 
+                grid-template-columns: 1fr; 
+                gap: 8px;
+                margin: 10px 0;
+            }
+            .strike-btn, #reveal-all-btn, .team-start-btn { 
+                width: 80%; 
+                margin: 5px 0; 
+                padding: 15px 30px; 
+                font-size: 1.5em; 
+            }
             #select-start-team-buttons { flex-direction: column; gap: 10px; }
         }
     </style>
@@ -395,7 +394,7 @@
                 <span id="score-blue" class="score-value">0</span>
             </div>
         </div>
-
+        
         <div class="game-controls">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h3>نقاط الجولة الحالية: <span id="current-round-score">0</span></h3>
@@ -425,7 +424,9 @@
 
         <div class="control-buttons">
             <button id="next-strike-btn" class="main-btn strike-btn hidden">خطأ (X)</button>
+            
             <button id="reveal-all-btn" class="main-btn hidden">كشف الكل</button>
+            
             <button id="next-question-btn" class="main-btn next-btn hidden">الفاصل التالي</button>
         </div>
     </div>
@@ -525,7 +526,7 @@
         const MAX_STRIKES = 3;
         let currentTurn = 'none'; // الفريق الذي بدأ الجولة
         let stealingTeam = null; 
-        let stealingMode = false; // **متغير جديد: حالة السرقة**
+        let stealingMode = false; 
         
         // العناصر DOM
         const startScreen = document.getElementById('start-screen');
@@ -546,9 +547,9 @@
         // عناصر السرقة
         const stealPanel = document.getElementById('steal-panel');
         const stealingTeamNameElement = document.getElementById('stealing-team-name');
-        const stealFailBtn = document.getElementById('steal-fail-btn'); // تم إبقاء زر الخطأ فقط
+        const stealFailBtn = document.getElementById('steal-fail-btn'); 
         
-        // المؤثرات الصوتية (قد تحتاج إلى تفعيل سماعاتك أو إذن تشغيل الصوت)
+        // المؤثرات الصوتية 
         const correctSound = new Audio('https://www.soundjay.com/misc/sounds/success-sound-effect-1.mp3'); 
         const strikeSound = new Audio('https://www.soundjay.com/misc/sounds/fail-buzzer-01.mp3'); 
 
@@ -609,16 +610,21 @@
             const currentQ = questions[currentQuestionIndex];
             answersBoard.innerHTML = '';
             roundScore = 0;
-            strikes = 0;
+            strikes = 0; // يتم تصفيرها هنا أيضاً لبداية مرحلة ما قبل اختيار الفريق
             stealingTeam = null;
             currentTurn = 'none';
-            stealingMode = false; // إعادة تعيين
+            stealingMode = false; 
             updateScoreDisplays();
             
-            nextStrikeBtn.classList.add('hidden');
-            revealAllBtn.classList.add('hidden');
+            // إظهار وتفعيل زر الخطأ (X) فقط
+            nextStrikeBtn.classList.remove('hidden');
+            nextStrikeBtn.disabled = false;
+            
+            // إخفاء الأزرار الأخرى
+            revealAllBtn.classList.add('hidden'); 
             nextBtn.classList.add('hidden');
             stealPanel.classList.add('hidden');
+            
             selectStartTeamButtons.classList.remove('hidden');
             
             // بناء خانات الإجابات مغلقة
@@ -626,7 +632,6 @@
                 const slot = document.createElement('div');
                 slot.className = 'answer-slot';
                 slot.setAttribute('data-index', index);
-                slot.style.pointerEvents = 'none'; 
                 
                 ans.isRevealed = false;
 
@@ -638,27 +643,30 @@
                     </div>
                 `;
                 
+                // إضافة مستمع الحدث هنا لتمكين النقر فوراً
+                slot.addEventListener('click', () => revealAnswer(index));
+
                 answersBoard.appendChild(slot);
             });
         }
         
         function loadQuestion(startingTeam) {
             currentTurn = startingTeam; 
+            
+            // ✅ التعديل المطلوب: تصفير عداد الأخطاء عند بدء اللعب الرسمي
+            strikes = 0; 
+
             updateScoreDisplays();
             
             selectStartTeamButtons.classList.add('hidden');
-            nextStrikeBtn.classList.remove('hidden');
+            
+            // الآن نُظهر زر كشف الكل بعد اختيار الفريق
             revealAllBtn.classList.remove('hidden');
-            nextStrikeBtn.disabled = false;
             revealAllBtn.disabled = false;
             
             // تفعيل النقر على الإجابات
-            document.querySelectorAll('.answer-slot').forEach((slot, index) => {
+            document.querySelectorAll('.answer-slot').forEach(slot => {
                 slot.style.pointerEvents = 'auto';
-                // إزالة أي مستمعات قديمة قبل إضافة الجديد
-                const newSlot = slot.cloneNode(true);
-                slot.parentNode.replaceChild(newSlot, slot);
-                newSlot.addEventListener('click', () => revealAnswer(index));
             });
         }
 
@@ -677,7 +685,6 @@
             }, 500); 
         }
 
-        // تم تعديل هذه الدالة لاستيعاب وضع السرقة
         function revealAnswer(index) {
             // إخفاء الوميض فوراً
             strikeFlashContainer.classList.add('hidden'); 
@@ -687,20 +694,18 @@
             
             if (ans.isRevealed) return;
             
-            // 1. **منطق السرقة (Stealing Mode)**
+            // 1. كشف الإجابة وإضافة النقاط إلى roundScore في كل الأحوال
+            ans.isRevealed = true;
+            roundScore += ans.points; 
+            correctSound.play(); 
+            
+            const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
+            if (slotElement) {
+                slotElement.classList.add('revealed');
+            }
+            
+            // 2. منطق السرقة (Stealing Mode)
             if (stealingMode) {
-                // إجابة صحيحة من الفريق السارق
-                ans.isRevealed = true;
-                roundScore += ans.points; 
-                correctSound.play(); 
-                updateScoreDisplays();
-                
-                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
-                if (slotElement) {
-                    slotElement.classList.add('revealed');
-                }
-                
-                // السرقة تمت بنجاح: تحويل النقاط وإنهاء الجولة فوراً
                 transferPoints(stealingTeam);
                 stealingMode = false;
                 stealPanel.classList.add('hidden');
@@ -708,29 +713,33 @@
                 return; 
             }
 
-            // 2. **المنطق العادي (كشف الإجابات للفريق الأصلي)**
-            if (strikes >= MAX_STRIKES) return; 
-
-            ans.isRevealed = true;
-            roundScore += ans.points; 
-            correctSound.play(); 
-            updateScoreDisplays();
-
-            const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
-            if (slotElement) {
-                slotElement.classList.add('revealed');
-            }
-            
-            const allRevealed = currentQ.answers.every(a => a.isRevealed);
-            if (allRevealed) {
-                transferPoints(currentTurn); 
-                endRound(); 
+            // 3. المنطق العادي (الجولة النشطة)
+            if (currentTurn !== 'none') {
+                updateScoreDisplays();
+                
+                const allRevealed = currentQ.answers.every(a => a.isRevealed);
+                if (allRevealed) {
+                    transferPoints(currentTurn); 
+                    endRound(); 
+                }
+            } else {
+                // 4. المنطق التلقائي (الكشف قبل اختيار الفريق): تحديث نقاط الجولة فقط
+                currentRoundScoreElement.textContent = roundScore; 
             }
         }
 
         function handleStrike() {
             
             strikeFlashContainer.classList.add('hidden');
+            
+            // 1. قبل اختيار الفريق: X واحد فقط لا يؤثر على عداد اللعب الرسمي
+            if (currentTurn === 'none') {
+                strikes = 1; 
+                flashStrike('❌'); 
+                return; 
+            }
+            
+            // 2. بعد اختيار الفريق (المنطق المعتاد):
             
             if (strikes >= MAX_STRIKES) return; 
 
@@ -749,15 +758,15 @@
         function initiateStealOpportunity() {
             strikeFlashContainer.classList.add('hidden'); 
             
-            stealingMode = true; // **تفعيل وضع السرقة**
+            stealingMode = true; 
             
-            // تفعيل النقر على الأجوبة غير المكشوفة
+            // تفعيل النقر على الأجوبة غير المكشوفة للسرقة
             document.querySelectorAll('.answer-slot').forEach((slot, index) => {
                 const currentQ = questions[currentQuestionIndex];
                 if (!currentQ.answers[index].isRevealed) {
-                     slot.style.pointerEvents = 'auto'; // تفعيل النقر على الأجوبة المتبقية
+                    slot.style.pointerEvents = 'auto'; 
                 } else {
-                     slot.style.pointerEvents = 'none'; // تعطيل النقر على الأجوبة المكشوفة
+                    slot.style.pointerEvents = 'none'; 
                 }
             });
 
@@ -769,20 +778,19 @@
 
             stealingTeamNameElement.textContent = stealingTeamName;
             stealPanel.classList.remove('hidden');
-            updateScoreDisplays(); // لتحديث مؤشر الدور إلى الفريق السارق
+            updateScoreDisplays(); 
         }
 
-        // تم تعديل هذه الدالة للسرقة الفاشلة فقط
         function resolveStealFail() {
             stealingMode = false;
             stealPanel.classList.add('hidden');
             
-            // إعادة تعطيل النقر على جميع الأجوبة بعد فشل السرقة
+            // تعطيل النقر بعد فشل السرقة
             document.querySelectorAll('.answer-slot').forEach(slot => {
                 slot.style.pointerEvents = 'none';
             });
 
-            // ❌ عرض X إضافي
+            // ❌ عرض X إضافي (تأكيد فشل السرقة)
             flashStrike('❌');
             
             // منح النقاط للفريق الأصلي وإنهاء الجولة
@@ -795,7 +803,7 @@
         function endRound() {
             strikeFlashContainer.classList.add('hidden'); 
             
-            stealingMode = false; // إنهاء وضع السرقة
+            stealingMode = false; 
             
             // كشف أي إجابات متبقية
              questions[currentQuestionIndex].answers.forEach((ans, index) => {
@@ -808,10 +816,16 @@
             document.querySelectorAll('.answer-slot').forEach(slot => {
                 slot.style.pointerEvents = 'none';
             });
+            
+            // إخفاء أزرار اللعب
             nextStrikeBtn.classList.add('hidden');
             revealAllBtn.classList.add('hidden');
+            
+            // إظهار زر الانتقال للفاصل
             nextBtn.classList.remove('hidden');
-            updateScoreDisplays(); // لإزالة مؤشر الدور النشط
+            
+            currentTurn = 'none'; 
+            updateScoreDisplays(); 
         }
         
         function transferPoints(team) {
@@ -829,10 +843,18 @@
         function revealAllAnswersAndEnd() {
             strikeFlashContainer.classList.add('hidden'); 
             
-            roundScore = 0;
+             questions[currentQuestionIndex].answers.forEach((ans, index) => {
+                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
+                if (slotElement && !ans.isRevealed) {
+                   slotElement.classList.add('revealed');
+                }
+            });
+            
+            roundScore = 0; 
             strikes = MAX_STRIKES; 
             updateScoreDisplays();
             
+            // إنهاء الجولة
             endRound(); 
         }
 
