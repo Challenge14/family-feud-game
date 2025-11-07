@@ -135,10 +135,9 @@
             margin-top: 10px;
         }
 
-        /* **التعديل الجديد: تباعد أزرار بدء الفريقين** */
+        /* تباعد أزرار بدء الفريقين */
         #select-start-team-buttons {
             display: flex;
-            /* توزيع الأزرار على أقصى اليمين واليسار */
             justify-content: space-between; 
             margin-top: 15px; 
         }
@@ -708,11 +707,10 @@
         function handleStrike() {
             // منطق تسجيل الخطأ (X)
             
-            // إذا كان الدور محددًا (بدأت الجولة) وكان الحد الأقصى للأخطاء قد وصل، نخرج
+            // 1. إذا كان الدور محددًا (بدأت الجولة) وكان الحد الأقصى للأخطاء قد وصل، نخرج
             if (currentTurn !== 'none' && strikes >= MAX_STRIKES) return; 
 
-            // إذا لم يكن الدور محددًا (قبل البدء) وكان الحد الأقصى قد وصل، نخرج
-            if (currentTurn === 'none' && strikes >= MAX_STRIKES) return; 
+            // 2. إذا لم يكن الدور محددًا (قبل البدء - لا قيد على عدد الضربات هنا)
             
             strikes++;
             
@@ -727,10 +725,8 @@
                 initiateStealOpportunity();
             }
             
-            // تعطيل زر الخطأ قبل البدء إذا وصل للحد الأقصى (3)
-            if (currentTurn === 'none' && strikes >= MAX_STRIKES) {
-                 preStartStrikeBtn.disabled = true;
-            }
+            // **تم حذف الشرط الذي يعطل الزر pre-start-strike-btn هنا،
+            //  مما يسمح له بالعمل إلى ما لا نهاية قبل بدء الجولة.**
         }
         
         function initiateStealOpportunity() {
