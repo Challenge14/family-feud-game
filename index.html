@@ -128,6 +128,21 @@
             margin-top: 10px;
         }
         
+        /* تنسيق لوحة أزرار السرقة */
+        .steal-buttons {
+            display: flex;
+            justify-content: flex-end; 
+            margin-top: 10px;
+        }
+
+        /* **التعديل الجديد: تباعد أزرار بدء الفريقين** */
+        #select-start-team-buttons {
+            display: flex;
+            /* توزيع الأزرار على أقصى اليمين واليسار */
+            justify-content: space-between; 
+            margin-top: 15px; 
+        }
+
         /* ========================================================= */
         /* SECTION 4: لوحة الإجابات الرئيسية (تصميم مدمج) */
         /* ========================================================= */
@@ -139,14 +154,14 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-top: 60px; 
+            padding-top: 10px; 
             margin-bottom: 20px;
         }
         
         /* لوحة النقاط العلوية المضيئة */
         #round-score-display-box {
             position: absolute;
-            top: 0;
+            top: -20px; 
             left: 50%;
             transform: translate(-50%, -100%);
             width: 150px;
@@ -178,17 +193,17 @@
             max-width: 900px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); 
             padding: 10px;
-            padding-top: 60px; 
+            padding-top: 10px; 
         }
 
         /* تأثير القوس البرتقالي */
         #answers-board-container::before {
             content: '';
             position: absolute;
-            top: -100px; 
+            top: -10px; 
             left: -5%; 
             right: -5%; 
-            height: 200px;
+            height: 100px; 
             border: 10px solid var(--accent-orange);
             border-radius: 50%;
             border-top-color: transparent;
@@ -199,28 +214,6 @@
             box-shadow: 0 0 15px rgba(255, 153, 0, 0.5); 
         }
         
-        /* مستطيل السؤال العلوي */
-        #question-header-mock {
-            position: absolute;
-            top: -40px; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%; 
-            height: 80px; 
-            background-color: var(--primary-blue);
-            border: 3px solid var(--accent-orange);
-            border-radius: 40px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em; 
-            font-weight: bold;
-            color: var(--accent-orange);
-            padding: 5px 20px;
-            z-index: 2;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
         /* شبكة الإجابات */
         .answers-board {
             display: grid;
@@ -317,12 +310,12 @@
 
         /* تعديل لتوسيط العنوان في شاشة البداية */
         #start-screen h1 {
-            margin-top: auto; /* يدفع العنوان للأعلى بقدر الإمكان */
-            margin-bottom: 20px; /* مسافة بين العنوان والزر */
-            font-size: 3.5em; /* يمكنك تعديل حجم الخط إذا أردت */
+            margin-top: auto; 
+            margin-bottom: 20px; 
+            font-size: 3.5em; 
         }
         #start-screen .main-btn {
-            margin-top: auto; /* يدفع الزر للأسفل بقدر الإمكان */
+            margin-top: auto; 
         }
         
     </style>
@@ -333,7 +326,8 @@
     
     <div id="start-screen" class="screen">
         <h1>تحدي الفصول</h1>
-        <button id="start-game-btn" class="main-btn">ابدأ المسابقة</button>
+        
+<button id="start-game-btn" class="main-btn">ابدأ المسابقة</button>
     </div>
 
     <div id="game-screen" class="screen hidden">
@@ -373,14 +367,16 @@
             </div>
             
             <div id="answers-board-container">
-                <div id="question-header-mock">السؤال الحالي</div>
                 <div id="answers-board" class="answers-board">
                     </div>
             </div>
         </div>
 
         <div class="control-buttons" style="margin-top: 20px;">
+            <button id="pre-start-strike-btn" class="main-btn strike-btn" style="background-color: var(--error-red);">خطأ (X)</button>
+            
             <button id="next-strike-btn" class="main-btn strike-btn hidden" style="background-color: var(--error-red);">خطأ (X)</button>
+            
             <button id="reveal-all-btn" class="main-btn hidden">كشف الكل</button>
             <button id="next-question-btn" class="main-btn next-btn hidden">الفاصل التالي</button>
         </div>
@@ -491,12 +487,12 @@
         
         // عناصر التحكم والإخراج
         const nextStrikeBtn = document.getElementById('next-strike-btn');
+        const preStartStrikeBtn = document.getElementById('pre-start-strike-btn'); 
         const nextBtn = document.getElementById('next-question-btn');
         const revealAllBtn = document.getElementById('reveal-all-btn');
         const currentRoundScoreElement = document.getElementById('current-round-score-display');
         const strikeFlashContainer = document.getElementById('strike-flash-container');
         const selectStartTeamButtons = document.getElementById('select-start-team-buttons'); 
-        const questionHeaderMock = document.getElementById('question-header-mock'); 
         const strikesDisplay = document.getElementById('strikes-display'); 
 
         // عناصر النقاط والفرق
@@ -521,8 +517,12 @@
             // تحديث نقاط الجولة المضيئة
             currentRoundScoreElement.textContent = roundScore;
             
-            // تحديث الضربات (X)
-            strikesDisplay.textContent = '❌'.repeat(strikes);
+            // **تحديث الضربات (X) - تُعرض فقط بعد بدء الجولة**
+            if (currentTurn !== 'none') {
+                strikesDisplay.textContent = '❌'.repeat(strikes);
+            } else {
+                strikesDisplay.textContent = ''; // إخفاء عرض الأخطاء قبل البدء
+            }
             
             // تحديث مؤشر الدور الحالي
             teamRedBox.classList.remove('active-turn');
@@ -603,17 +603,20 @@
             stealingTeam = null;
             currentTurn = 'none';
             stealingMode = false; 
-            updateScoreDisplays();
             
-            questionHeaderMock.textContent = currentQ.question; 
+            // تحديث عرض النقاط والأخطاء فورا لتظهر حالة البداية (0 أخطاء)
+            updateScoreDisplays(); 
             
             // تهيئة الأزرار وعناصر التحكم للجولة الجديدة
-            nextStrikeBtn.classList.remove('hidden');
-            nextStrikeBtn.disabled = false;
+            // **إظهار وإخفاء أزرار الأخطاء**
+            nextStrikeBtn.classList.add('hidden'); // إخفاء زر الخطأ الرئيسي
+            preStartStrikeBtn.classList.remove('hidden'); // إظهار زر الخطأ قبل البدء
+            preStartStrikeBtn.disabled = false;
+            
             revealAllBtn.classList.add('hidden'); 
             nextBtn.classList.add('hidden');
             stealPanel.classList.add('hidden');
-            selectStartTeamButtons.classList.remove('hidden');
+            selectStartTeamButtons.classList.remove('hidden'); // إظهار أزرار بدء الفريق
             
             // بناء خانات الإجابات مغطاة
             const answersToDisplay = currentQ.answers.slice(0, 6); 
@@ -642,10 +645,18 @@
         function loadQuestion(startingTeam) {
             // بدء الجولة رسمياً بعد اختيار الفريق البادئ
             currentTurn = startingTeam; 
+            // إعادة تعيين الـ strikes إلى الصفر لتبدأ الجولة بـ 3 فرص كاملة.
             strikes = 0; 
+            
             updateScoreDisplays();
             
             selectStartTeamButtons.classList.add('hidden');
+            
+            // **إخفاء وإظهار أزرار الأخطاء**
+            preStartStrikeBtn.classList.add('hidden'); // إخفاء زر الخطأ قبل البدء
+            nextStrikeBtn.classList.remove('hidden'); // إظهار زر الخطأ الرئيسي
+            nextStrikeBtn.disabled = false;
+            
             revealAllBtn.classList.remove('hidden');
             revealAllBtn.disabled = false;
             
@@ -697,22 +708,28 @@
         function handleStrike() {
             // منطق تسجيل الخطأ (X)
             
-            if (currentTurn === 'none') {
-                // إذا لم يتم بدء الجولة بعد، اعتبرها مجرد ضربة تحذيرية
-                strikes = 1; 
-                flashStrike('❌'); 
-                return; 
-            }
+            // إذا كان الدور محددًا (بدأت الجولة) وكان الحد الأقصى للأخطاء قد وصل، نخرج
+            if (currentTurn !== 'none' && strikes >= MAX_STRIKES) return; 
+
+            // إذا لم يكن الدور محددًا (قبل البدء) وكان الحد الأقصى قد وصل، نخرج
+            if (currentTurn === 'none' && strikes >= MAX_STRIKES) return; 
             
-            if (strikes >= MAX_STRIKES) return; 
-
             strikes++;
-            flashStrike('❌'.repeat(strikes)); 
-
+            
+            // عرض وميض الخطأ
+            flashStrike('❌'); 
+            
+            // تحديث عرض الأخطاء (إذا كانت الجولة قد بدأت، ستظهر الأخطاء)
             updateScoreDisplays(); 
             
-            if (strikes >= MAX_STRIKES) {
+            // منطق بدء السرقة (يحدث فقط إذا تم تحديد فريق للعب ووصلت الأخطاء للحد الأقصى)
+            if (currentTurn !== 'none' && strikes >= MAX_STRIKES) {
                 initiateStealOpportunity();
+            }
+            
+            // تعطيل زر الخطأ قبل البدء إذا وصل للحد الأقصى (3)
+            if (currentTurn === 'none' && strikes >= MAX_STRIKES) {
+                 preStartStrikeBtn.disabled = true;
             }
         }
         
@@ -774,6 +791,7 @@
             
             // إخفاء أزرار الجولة وإظهار زر المتابعة
             nextStrikeBtn.classList.add('hidden');
+            preStartStrikeBtn.classList.add('hidden'); // إخفاء زر الخطأ قبل البدء أيضاً
             revealAllBtn.classList.add('hidden');
             nextBtn.classList.remove('hidden');
             
@@ -839,6 +857,7 @@
             document.getElementById('start-red-btn').addEventListener('click', () => loadQuestion('red'));
             document.getElementById('start-blue-btn').addEventListener('click', () => loadQuestion('blue'));
             document.getElementById('next-strike-btn').addEventListener('click', handleStrike);
+            document.getElementById('pre-start-strike-btn').addEventListener('click', handleStrike); 
             document.getElementById('reveal-all-btn').addEventListener('click', endRound);
             
             // زر السرقة
