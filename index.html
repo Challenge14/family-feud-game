@@ -3,33 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحدي الفصول (Family Feud Style)</title>
+    <title>تحدي الفصول (مرتب)</title>
     
     <style>
         /* ========================================================= */
-        /* 1. التصميم الأساسي والألوان (لم تتغير) */
+        /* SECTION 1: المتغيرات الأساسية والألوان */
         /* ========================================================= */
         :root {
-            --primary-blue: #00004d;
-            --accent-gold: #ffcc00;
-            --light-grey: #e0e0e0;
-            --text-dark: #333333;
-            --error-red: #cc0000;
-            --bg-gradient-start: #1a2a6c;
-            --bg-gradient-end: #000022;
-            --team-red: #d80000;
-            --team-blue: #007bff;
-            --secondary-green: #28a745;
+            --primary-blue: #002b5e; 
+            --accent-orange: #ff9900; 
+            --dark-blue-bg: #00001a; 
+            --light-gold: #ffeb3b;
+            --neon-blue: #0088ff;
+            --text-color: #f0f0f0; 
+            --error-red: #e60000; 
+            --team-red: #d82b2b;
+            --team-blue: #1c529e;
+            --slot-border: #ffffff;
         }
 
+        /* ========================================================= */
+        /* SECTION 2: التنسيق العام وخلفية الـ BODY */
+        /* ========================================================= */
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            color: var(--light-grey);
+            background-color: var(--dark-blue-bg); 
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 90vh; /* تم رفعها قليلاً */
+            min-height: 100vh;
             margin: 0;
             direction: rtl;
             padding: 20px;
@@ -37,107 +40,255 @@
             overflow: hidden; 
         }
 
+        .hidden { display: none !important; }
+
+        /* تنسيق شاشات اللعب (الخلفية الشعاعية) */
         .screen {
             text-align: center;
-            padding: 30px 40px; /* تم رفعها قليلاً */
-            background: var(--light-grey);
-            color: var(--text-dark);
+            padding: 20px;
+            background-image: 
+                radial-gradient(ellipse at center, rgba(0, 43, 94, 0.4) 0%, rgba(0, 31, 76, 0.8) 50%, rgba(0, 0, 0, 1) 100%),
+                repeating-radial-gradient(circle at 50% 50%, rgba(0, 43, 94, 0.1) 0px, transparent 150px);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: var(--dark-blue-bg); 
+
             border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
             width: 95%;
-            max-width: 1100px;
-            border: 6px solid var(--accent-gold);
-            animation: fadeIn 1s ease-out;
-            position: absolute; 
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: auto;
-            min-height: 75vh; /* تم رفعها قليلاً */
+            max-width: 1200px;
+            border: 3px solid var(--accent-orange);
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-height: 90vh; 
         }
 
-        .hidden {
-            display: none !important;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        h1 {
-            color: var(--primary-blue);
-            font-size: 2.8em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 5px;
-        }
-        
-        .subtitle {
-            font-size: 1.6em;
-            color: var(--text-dark);
-            margin-bottom: 25px;
-            font-weight: bold;
-        }
-
+        /* تنسيق الأزرار */
         .main-btn {
-            background-color: var(--accent-gold);
+            background-color: var(--accent-orange);
             color: var(--primary-blue);
             border: 4px solid var(--primary-blue);
-            padding: 18px 35px;
-            font-size: 1.4em;
+            padding: 15px 30px;
+            font-size: 1.3em;
             cursor: pointer;
             border-radius: 10px;
-            transition: all 0.3s ease;
             font-weight: bold;
-            margin: 15px 15px; 
+            margin: 10px 10px; 
             box-shadow: 0 6px var(--primary-blue);
+            transition: all 0.2s;
         }
         .main-btn:hover:not([disabled]) {
             background-color: var(--primary-blue);
-            color: var(--accent-gold);
+            color: var(--accent-orange);
             transform: translateY(3px) scale(1.03);
-            box-shadow: 0 3px var(--primary-blue);
-        }
-        .main-btn[disabled] {
-            opacity: 0.5;
-            cursor: not-allowed;
+            box-shadow: 0 3px var(--accent-orange);
         }
 
-
-        /* شاشة الفاصل */
-        #intermission-screen {
+        /* ========================================================= */
+        /* SECTION 3: لوحات النقاط العلوية والتحكم */
+        /* ========================================================= */
+        .score-teams-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        .team-score-box {
+            flex-grow: 1;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 3px solid var(--accent-orange); 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            transition: border-color 0.3s;
+        }
+        .team-score-box.active-turn {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px var(--neon-blue);
+        }
+        .game-controls {
             background: var(--primary-blue);
-            color: white;
-            border: 6px solid var(--accent-gold);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border: 3px solid var(--accent-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .strike-display { 
+            font-size: 1.5em; 
+            color: var(--error-red);
+            font-weight: bold;
+        }
+        .steal-panel {
+            background: var(--primary-blue);
+            border: 4px solid var(--error-red);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        /* ========================================================= */
+        /* SECTION 4: لوحة الإجابات الرئيسية (تصميم مدمج) */
+        /* ========================================================= */
+        
+        #answers-board-wrapper {
+            position: relative;
+            flex-grow: 1; 
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            padding: 60px;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px; 
+            margin-bottom: 20px;
         }
-        #intermission-screen h1 {
-            color: var(--accent-gold);
-            font-size: 4em;
-            text-shadow: 4px 4px 6px rgba(0,0,0,0.6);
+        
+        /* لوحة النقاط العلوية المضيئة */
+        #round-score-display-box {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            width: 150px;
+            height: 70px;
+            background-color: #00001a;
+            border: 5px solid var(--neon-blue);
+            border-radius: 5px;
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffffff;
+            z-index: 5;
+            overflow: hidden;
         }
-        .intermission-scores h2 {
-            font-size: 2.5em;
-            margin: 10px 0;
-            border-bottom: 3px solid var(--accent-gold);
-            padding-bottom: 10px;
-            color: white;
-        }
-        #next-round-btn {
-            background-color: var(--accent-gold);
-            color: var(--primary-blue);
-            border: 4px solid var(--primary-blue);
+        #current-round-score-display {
+            text-shadow: 0 0 5px #ffffff, 0 0 10px var(--neon-blue);
         }
 
+        /* الحاوية الرئيسية للوحة (القوس البرتقالي) */
+        #answers-board-container {
+            position: relative;
+            background-color: var(--primary-blue);
+            border-radius: 20px;
+            height: 90%; 
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); 
+            padding: 10px;
+            padding-top: 60px; 
+        }
+
+        /* تأثير القوس البرتقالي */
+        #answers-board-container::before {
+            content: '';
+            position: absolute;
+            top: -100px; 
+            left: -5%; 
+            right: -5%; 
+            height: 200px;
+            border: 10px solid var(--accent-orange);
+            border-radius: 50%;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            z-index: 1;
+            box-sizing: border-box;
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.5); 
+        }
         
-        /* شاشة عرض الأخطاء الكبيرة */
+        /* مستطيل السؤال العلوي */
+        #question-header-mock {
+            position: absolute;
+            top: -40px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%; 
+            height: 80px; 
+            background-color: var(--primary-blue);
+            border: 3px solid var(--accent-orange);
+            border-radius: 40px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em; 
+            font-weight: bold;
+            color: var(--accent-orange);
+            padding: 5px 20px;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* شبكة الإجابات */
+        .answers-board {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            grid-template-rows: repeat(auto-fit, minmax(70px, 1fr)); 
+            gap: 15px 30px; 
+            padding: 25px;
+            height: 100%; 
+        }
+
+        /* خانة الإجابة الواحدة */
+        .answer-slot {
+            background-color: var(--primary-blue); 
+            color: var(--slot-border); 
+            border: 2px solid var(--slot-border); 
+            padding: 15px 20px;
+            border-radius: 5px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.8em; 
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        /* إخفاء الإجابات والنقاط افتراضياً */
+        .answer-text, .answer-points {
+            opacity: 0; 
+            transition: opacity 0.5s ease-in;
+            z-index: 9;
+        }
+        .answer-slot.revealed .answer-text, .answer-slot.revealed .answer-points {
+            opacity: 1; 
+        }
+        
+        /* الغطاء المخفي (الذي يحمل الرقم) */
+        .cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease-out;
+            z-index: 10; 
+        }
+
+        /* إخفاء الغطاء عند الكشف */
+        .answer-slot.revealed .cover {
+            opacity: 0;
+            pointer-events: none; 
+        }
+
+        .cover .answer-number {
+            color: var(--slot-border);
+            font-size: 3em;
+            border-bottom: 5px solid var(--accent-orange);
+            padding: 0 10px 5px;
+        }
+
+        /* ========================================================= */
+        /* SECTION 5: مؤثر الخطأ (X) */
+        /* ========================================================= */
         #strike-flash-container {
             position: fixed;
             top: 0;
@@ -149,14 +300,12 @@
             display: flex; 
             justify-content: center;
             align-items: center;
-            color: white;
+            color: var(--error-red);
             font-size: min(60vw, 60vh); 
             font-weight: 900;
             text-shadow: 0 0 20px var(--error-red), 0 0 50px var(--error-red), 0 0 10px black; 
             white-space: nowrap; 
-            transform: scale(1.0); 
             opacity: 0; 
-            transition: opacity 0.1s ease-in; 
         }
 
         @keyframes strikeFlash {
@@ -165,211 +314,17 @@
             50% { opacity: 1; transform: scale(1.15) rotate(1deg); } 
             100% { opacity: 0; transform: scale(1.1); } 
         }
-        
-        .score-teams-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            gap: 20px;
-        }
-        .team-score-box {
-            flex-grow: 1;
-            padding: 15px 20px;
-            border-radius: 10px;
-            border: 3px solid var(--accent-gold);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-            position: relative;
-        }
-        #team-red-box {
-            background-color: var(--team-red);
-            color: white;
-        }
-        #team-blue-box {
-            background-color: var(--team-blue);
-            color: white;
-        }
-        .team-score-box.active-turn::after {
-            content: '⮞';
-            position: absolute;
-            right: 1:0px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 3em;
-            color: var(--accent-gold);
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
 
-        .game-controls {
-            background: var(--primary-blue);
-            color: var(--accent-gold);
-            padding: 15px 20px;
-            border-radius: 10px;
-            border: 3px solid var(--accent-gold);
-            margin-bottom: 30px;
+        /* تعديل لتوسيط العنوان في شاشة البداية */
+        #start-screen h1 {
+            margin-top: auto; /* يدفع العنوان للأعلى بقدر الإمكان */
+            margin-bottom: 20px; /* مسافة بين العنوان والزر */
+            font-size: 3.5em; /* يمكنك تعديل حجم الخط إذا أردت */
+        }
+        #start-screen .main-btn {
+            margin-top: auto; /* يدفع الزر للأسفل بقدر الإمكان */
         }
         
-        .question-container {
-            visibility: hidden;
-            height: 0;
-            padding: 0;
-            margin: 0;
-        }
-
-        .answers-board {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 12px;
-            margin: 15px 0; 
-            padding: 15px;
-            background: var(--light-grey);
-            border-radius: 10px;
-            border: 2px solid var(--primary-blue);
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
-            flex-grow: 1;
-        }
-
-        .answer-slot {
-            background-color: var(--primary-blue);
-            color: var(--accent-gold);
-            padding: 15px 20px;
-            border-radius: 10px;
-            border: 3px solid var(--accent-gold);
-            height: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.4em;
-            font-weight: 900;
-            position: relative;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            overflow: hidden;
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-        }
-        
-        .cover {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--primary-blue);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-radius: 8px;
-            z-index: 10;
-        }
-        .cover .answer-number {
-            color: var(--accent-gold);
-            font-size: 2.5em;
-            font-weight: 900;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            border-bottom: 5px solid var(--accent-gold);
-            padding-bottom: 5px;
-        }
-        .answer-slot.revealed .cover {
-            transform: scaleX(0);
-            opacity: 0;
-        }
-        .answer-slot > span {
-            opacity: 0;
-            transition: opacity 0.4s 0.1s;
-            color: var(--accent-gold);
-        }
-        .answer-slot.revealed > span {
-            opacity: 1;
-        }
-        
-        #strikes-display {
-            visibility: hidden;
-            height: 0;
-            margin: 0;
-        }
-
-        /* لوحة السرقة */
-        .steal-panel {
-            background: var(--primary-blue);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            border: 4px solid var(--error-red);
-            margin-top: 20px;
-        }
-        .steal-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        .steal-buttons button {
-            background-color: var(--error-red); 
-            border: 2px solid white;
-        }
-
-        /* أزرار اختيار الفريق البادئ */
-        #select-start-team-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-        #select-start-team-buttons .team-start-btn {
-            padding: 20px 40px;
-            font-size: 1.5em;
-            color: white;
-            border: 3px solid var(--accent-gold);
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px var(--primary-blue);
-        }
-        #start-red-btn {
-            background-color: var(--team-red);
-        }
-        #start-blue-btn {
-            background-color: var(--team-blue);
-        }
-        #start-red-btn:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px var(--primary-blue);
-        }
-        #start-blue-btn:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px var(--primary-blue);
-        }
-        
-        /* التصميم المتجاوب */
-        @media (max-width: 600px) {
-            .screen { 
-                padding: 10px 15px; 
-                min-height: 80vh; 
-            }
-            h1 { font-size: 2.2em; }
-            .team-score-box h2 { font-size: 1.1em; }
-            .team-score-box .score-value { font-size: 2em; }
-            .answers-board { 
-                grid-template-columns: 1fr; 
-                gap: 8px;
-                margin: 10px 0;
-            }
-            .strike-btn, #reveal-all-btn, .team-start-btn { 
-                width: 80%; 
-                margin: 5px 0; 
-                padding: 15px 30px; 
-                font-size: 1.5em; 
-            }
-            #select-start-team-buttons { flex-direction: column; gap: 10px; }
-        }
     </style>
 </head>
 <body>
@@ -378,7 +333,6 @@
     
     <div id="start-screen" class="screen">
         <h1>تحدي الفصول</h1>
-        <p class="subtitle">مسابقة بين فريقين - 5 جولات</p>
         <button id="start-game-btn" class="main-btn">ابدأ المسابقة</button>
     </div>
 
@@ -397,36 +351,37 @@
         
         <div class="game-controls">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3>نقاط الجولة الحالية: <span id="current-round-score">0</span></h3>
-                <div id="strikes-display" class="strikes"></div>
+                <div id="strikes-display" class="strike-display"></div>
             </div>
             
             <div id="steal-panel" class="steal-panel hidden">
                 <h3>فرصة السرقة: الفريق <span id="stealing-team-name"></span> عليه إعطاء إجابة</h3>
-                <div class="steal-buttons" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
-                    <p style="font-size: 1.2em; margin: 0;">اختر إجابة صحيحة من اللوحة أو اضغط:</p>
+                <div class="steal-buttons">
                     <button id="steal-fail-btn" class="main-btn" style="background-color: var(--error-red);">إجابة خاطئة (خطأ)</button>
                 </div>
             </div>
 
             <div id="select-start-team-buttons" class="hidden">
-                <button id="start-red-btn" class="team-start-btn">بدء الجولة: الفريق الأحمر</button>
-                <button id="start-blue-btn" class="team-start-btn">بدء الجولة: الفريق الأزرق</button>
+                <button id="start-red-btn" class="main-btn" style="background-color: var(--team-red);">بدء الجولة: الفريق الأحمر</button>
+                <button id="start-blue-btn" class="main-btn" style="background-color: var(--team-blue);">بدء الجولة: الفريق الأزرق</button>
             </div>
         </div>
 
-        <div class="question-container">
-            <h1 id="question-text"></h1>
-        </div>
-        
-        <div id="answers-board" class="answers-board">
+        <div id="answers-board-wrapper">
+            <div id="round-score-display-box">
+                <span id="current-round-score-display">0</span>
             </div>
-
-        <div class="control-buttons">
-            <button id="next-strike-btn" class="main-btn strike-btn hidden">خطأ (X)</button>
             
+            <div id="answers-board-container">
+                <div id="question-header-mock">السؤال الحالي</div>
+                <div id="answers-board" class="answers-board">
+                    </div>
+            </div>
+        </div>
+
+        <div class="control-buttons" style="margin-top: 20px;">
+            <button id="next-strike-btn" class="main-btn strike-btn hidden" style="background-color: var(--error-red);">خطأ (X)</button>
             <button id="reveal-all-btn" class="main-btn hidden">كشف الكل</button>
-            
             <button id="next-question-btn" class="main-btn next-btn hidden">الفاصل التالي</button>
         </div>
     </div>
@@ -450,9 +405,8 @@
 
     
     <script>
-        
         // =========================================================
-        // 5. البيانات (تم تثبيتها على 5 أسئلة)
+        // SECTION 6: البيانات
         // =========================================================
         const questionsData = [
             {
@@ -512,11 +466,11 @@
             }
         ];
 
-
         // =========================================================
-        // 6. المتغيرات والعناصر DOM
+        // SECTION 7: المتغيرات الرئيسية وعناصر DOM
         // =========================================================
         
+        // متغيرات حالة اللعبة
         let questions = questionsData.slice(0, 5); 
         let currentQuestionIndex = 0;
         let scoreRed = 0;
@@ -524,27 +478,30 @@
         let roundScore = 0;
         let strikes = 0;
         const MAX_STRIKES = 3;
-        let currentTurn = 'none'; // الفريق الذي بدأ الجولة
+        let currentTurn = 'none'; 
         let stealingTeam = null; 
         let stealingMode = false; 
         
-        // العناصر DOM
+        // عناصر الشاشة
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
         const intermissionScreen = document.getElementById('intermission-screen');
         const endScreen = document.getElementById('end-screen');
         const answersBoard = document.getElementById('answers-board');
+        
+        // عناصر التحكم والإخراج
         const nextStrikeBtn = document.getElementById('next-strike-btn');
         const nextBtn = document.getElementById('next-question-btn');
         const revealAllBtn = document.getElementById('reveal-all-btn');
-        const currentRoundScoreElement = document.getElementById('current-round-score');
+        const currentRoundScoreElement = document.getElementById('current-round-score-display');
         const strikeFlashContainer = document.getElementById('strike-flash-container');
         const selectStartTeamButtons = document.getElementById('select-start-team-buttons'); 
+        const questionHeaderMock = document.getElementById('question-header-mock'); 
+        const strikesDisplay = document.getElementById('strikes-display'); 
 
-        const startRedBtn = document.getElementById('start-red-btn');
-        const startBlueBtn = document.getElementById('start-blue-btn');
-        
-        // عناصر السرقة
+        // عناصر النقاط والفرق
+        const teamRedBox = document.getElementById('team-red-box');
+        const teamBlueBox = document.getElementById('team-blue-box');
         const stealPanel = document.getElementById('steal-panel');
         const stealingTeamNameElement = document.getElementById('stealing-team-name');
         const stealFailBtn = document.getElementById('steal-fail-btn'); 
@@ -554,28 +511,63 @@
         const strikeSound = new Audio('https://www.soundjay.com/misc/sounds/fail-buzzer-01.mp3'); 
 
         // =========================================================
-        // 7. إدارة اللعبة والوظائف
+        // SECTION 8: وظائف تحديث الواجهة (UI Updates)
         // =========================================================
 
         function updateScoreDisplays() {
+            // تحديث النقاط الإجمالية
             document.getElementById('score-red').textContent = scoreRed;
             document.getElementById('score-blue').textContent = scoreBlue;
+            // تحديث نقاط الجولة المضيئة
             currentRoundScoreElement.textContent = roundScore;
             
+            // تحديث الضربات (X)
+            strikesDisplay.textContent = '❌'.repeat(strikes);
+            
             // تحديث مؤشر الدور الحالي
-            document.getElementById('team-red-box').classList.remove('active-turn');
-            document.getElementById('team-blue-box').classList.remove('active-turn');
+            teamRedBox.classList.remove('active-turn');
+            teamBlueBox.classList.remove('active-turn');
             if (currentTurn === 'red' && !stealingMode) {
-                document.getElementById('team-red-box').classList.add('active-turn');
+                teamRedBox.classList.add('active-turn');
             } else if (currentTurn === 'blue' && !stealingMode) {
-                document.getElementById('team-blue-box').classList.add('active-turn');
-            } else if (stealingMode) { // تسليط الضوء على الفريق السارق
-                const activeStealBox = stealingTeam === 'red' ? 'team-red-box' : 'team-blue-box';
-                document.getElementById(activeStealBox).classList.add('active-turn');
+                teamBlueBox.classList.add('active-turn');
+            } else if (stealingMode) {
+                const activeStealBox = stealingTeam === 'red' ? teamRedBox : teamBlueBox;
+                activeStealBox.classList.add('active-turn');
             }
         }
+        
+        function flashStrike(symbol) {
+            // مؤثر ظهور وإخفاء الخطأ الكبير على الشاشة
+            strikeFlashContainer.classList.remove('hidden'); 
+            strikeFlashContainer.textContent = symbol;
+            strikeSound.play(); 
 
-        function startGame() {
+            strikeFlashContainer.style.animation = 'none';
+            void strikeFlashContainer.offsetWidth; 
+            strikeFlashContainer.style.animation = 'strikeFlash 0.5s forwards'; 
+            
+            setTimeout(() => {
+                strikeFlashContainer.classList.add('hidden');
+            }, 500); 
+        }
+
+        function showScreen(screenToShow) {
+            // إخفاء جميع الشاشات وإظهار الشاشة المطلوبة فقط
+            startScreen.classList.add('hidden');
+            gameScreen.classList.add('hidden');
+            intermissionScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            screenToShow.classList.remove('hidden');
+        }
+
+
+        // =========================================================
+        // SECTION 9: وظائف إدارة حالة اللعبة والجولات
+        // =========================================================
+
+        function initGame() {
+            // تهيئة المتغيرات للعبة جديدة
             scoreRed = 0;
             scoreBlue = 0;
             currentQuestionIndex = 0;
@@ -583,15 +575,12 @@
             stealingMode = false;
             questions.forEach(q => q.answers.forEach(a => a.isRevealed = false));
             
-            startScreen.classList.add('hidden');
-            endScreen.classList.add('hidden');
-            
             showIntermissionScreen(); 
         }
         
         function showIntermissionScreen() {
-            gameScreen.classList.add('hidden');
-            intermissionScreen.classList.remove('hidden');
+            // عرض شاشة الفاصل بين الأسئلة
+            showScreen(intermissionScreen);
             
             const nextQNum = currentQuestionIndex + 1;
             document.getElementById('next-q-number').textContent = nextQNum;
@@ -604,31 +593,32 @@
         }
         
         function prepareQuestion() {
-            intermissionScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
+            // إعداد لوحة الأسئلة قبل بدء الجولة
+            showScreen(gameScreen);
             
             const currentQ = questions[currentQuestionIndex];
             answersBoard.innerHTML = '';
             roundScore = 0;
-            strikes = 0; // يتم تصفيرها هنا أيضاً لبداية مرحلة ما قبل اختيار الفريق
+            strikes = 0; 
             stealingTeam = null;
             currentTurn = 'none';
             stealingMode = false; 
             updateScoreDisplays();
             
-            // إظهار وتفعيل زر الخطأ (X) فقط
+            questionHeaderMock.textContent = currentQ.question; 
+            
+            // تهيئة الأزرار وعناصر التحكم للجولة الجديدة
             nextStrikeBtn.classList.remove('hidden');
             nextStrikeBtn.disabled = false;
-            
-            // إخفاء الأزرار الأخرى
             revealAllBtn.classList.add('hidden'); 
             nextBtn.classList.add('hidden');
             stealPanel.classList.add('hidden');
-            
             selectStartTeamButtons.classList.remove('hidden');
             
-            // بناء خانات الإجابات مغلقة
-            currentQ.answers.forEach((ans, index) => {
+            // بناء خانات الإجابات مغطاة
+            const answersToDisplay = currentQ.answers.slice(0, 6); 
+
+            answersToDisplay.forEach((ans, index) => {
                 const slot = document.createElement('div');
                 slot.className = 'answer-slot';
                 slot.setAttribute('data-index', index);
@@ -636,14 +626,13 @@
                 ans.isRevealed = false;
 
                 slot.innerHTML = `
-                    <span class="answer-text">${ans.text}</span>
                     <span class="answer-points">${ans.points}</span>
+                    <span class="answer-text">${ans.text}</span>
                     <div class="cover">
                         <span class="answer-number">${index + 1}</span>
                     </div>
                 `;
                 
-                // إضافة مستمع الحدث هنا لتمكين النقر فوراً
                 slot.addEventListener('click', () => revealAnswer(index));
 
                 answersBoard.appendChild(slot);
@@ -651,50 +640,27 @@
         }
         
         function loadQuestion(startingTeam) {
+            // بدء الجولة رسمياً بعد اختيار الفريق البادئ
             currentTurn = startingTeam; 
-            
-            // ✅ التعديل المطلوب: تصفير عداد الأخطاء عند بدء اللعب الرسمي
             strikes = 0; 
-
             updateScoreDisplays();
             
             selectStartTeamButtons.classList.add('hidden');
-            
-            // الآن نُظهر زر كشف الكل بعد اختيار الفريق
             revealAllBtn.classList.remove('hidden');
             revealAllBtn.disabled = false;
             
-            // تفعيل النقر على الإجابات
             document.querySelectorAll('.answer-slot').forEach(slot => {
                 slot.style.pointerEvents = 'auto';
             });
         }
 
-        function flashStrike(symbol) {
-            strikeFlashContainer.classList.remove('hidden'); 
-            strikeFlashContainer.textContent = symbol;
-            strikeSound.play(); 
-
-            strikeFlashContainer.style.animation = 'none';
-            void strikeFlashContainer.offsetWidth; 
-            
-            strikeFlashContainer.style.animation = 'strikeFlash 0.5s forwards'; 
-            
-            setTimeout(() => {
-                strikeFlashContainer.classList.add('hidden');
-            }, 500); 
-        }
-
         function revealAnswer(index) {
-            // إخفاء الوميض فوراً
-            strikeFlashContainer.classList.add('hidden'); 
-
+            // كشف الإجابة وإضافة النقاط
             const currentQ = questions[currentQuestionIndex];
-            const ans = currentQ.answers[index];
+            const ans = currentQ.answers[index]; 
             
-            if (ans.isRevealed) return;
+            if (!ans || ans.isRevealed) return;
             
-            // 1. كشف الإجابة وإضافة النقاط إلى roundScore في كل الأحوال
             ans.isRevealed = true;
             roundScore += ans.points; 
             correctSound.play(); 
@@ -704,8 +670,8 @@
                 slotElement.classList.add('revealed');
             }
             
-            // 2. منطق السرقة (Stealing Mode)
             if (stealingMode) {
+                // إذا تم الكشف بنجاح أثناء السرقة، يتم إنهاء الجولة
                 transferPoints(stealingTeam);
                 stealingMode = false;
                 stealPanel.classList.add('hidden');
@@ -713,40 +679,35 @@
                 return; 
             }
 
-            // 3. المنطق العادي (الجولة النشطة)
             if (currentTurn !== 'none') {
                 updateScoreDisplays();
                 
-                const allRevealed = currentQ.answers.every(a => a.isRevealed);
+                const answersInRound = currentQ.answers.slice(0, answersBoard.children.length);
+                const allRevealed = answersInRound.every(a => a.isRevealed);
+                
                 if (allRevealed) {
                     transferPoints(currentTurn); 
                     endRound(); 
                 }
             } else {
-                // 4. المنطق التلقائي (الكشف قبل اختيار الفريق): تحديث نقاط الجولة فقط
-                currentRoundScoreElement.textContent = roundScore; 
+                updateScoreDisplays();
             }
         }
 
         function handleStrike() {
+            // منطق تسجيل الخطأ (X)
             
-            strikeFlashContainer.classList.add('hidden');
-            
-            // 1. قبل اختيار الفريق: X واحد فقط لا يؤثر على عداد اللعب الرسمي
             if (currentTurn === 'none') {
+                // إذا لم يتم بدء الجولة بعد، اعتبرها مجرد ضربة تحذيرية
                 strikes = 1; 
                 flashStrike('❌'); 
                 return; 
             }
             
-            // 2. بعد اختيار الفريق (المنطق المعتاد):
-            
             if (strikes >= MAX_STRIKES) return; 
 
             strikes++;
-            
-            const strikeSymbol = '❌'.repeat(strikes);
-            flashStrike(strikeSymbol); 
+            flashStrike('❌'.repeat(strikes)); 
 
             updateScoreDisplays(); 
             
@@ -756,14 +717,13 @@
         }
         
         function initiateStealOpportunity() {
-            strikeFlashContainer.classList.add('hidden'); 
-            
+            // تفعيل وضع السرقة (بعد 3 أخطاء)
             stealingMode = true; 
             
-            // تفعيل النقر على الأجوبة غير المكشوفة للسرقة
+            // تفعيل إمكانية الضغط على الإجابات غير المكشوفة للسرقة
             document.querySelectorAll('.answer-slot').forEach((slot, index) => {
                 const currentQ = questions[currentQuestionIndex];
-                if (!currentQ.answers[index].isRevealed) {
+                if (index < currentQ.answers.length && !currentQ.answers[index].isRevealed) {
                     slot.style.pointerEvents = 'auto'; 
                 } else {
                     slot.style.pointerEvents = 'none'; 
@@ -782,18 +742,13 @@
         }
 
         function resolveStealFail() {
+            // فشل السرقة (عبر زر "إجابة خاطئة")
             stealingMode = false;
             stealPanel.classList.add('hidden');
             
-            // تعطيل النقر بعد فشل السرقة
-            document.querySelectorAll('.answer-slot').forEach(slot => {
-                slot.style.pointerEvents = 'none';
-            });
-
-            // ❌ عرض X إضافي (تأكيد فشل السرقة)
             flashStrike('❌');
             
-            // منح النقاط للفريق الأصلي وإنهاء الجولة
+            // نقاط الجولة تذهب للفريق الذي كان يلعب أولاً
             setTimeout(() => {
                 transferPoints(currentTurn); 
                 endRound(); 
@@ -801,27 +756,25 @@
         }
 
         function endRound() {
-            strikeFlashContainer.classList.add('hidden'); 
-            
+            // إنهاء الجولة وإظهار ما تبقى من إجابات
             stealingMode = false; 
             
-            // كشف أي إجابات متبقية
-             questions[currentQuestionIndex].answers.forEach((ans, index) => {
+            // كشف جميع الإجابات المتبقية
+            questions[currentQuestionIndex].answers.forEach((ans, index) => {
                 const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
                 if (slotElement && !ans.isRevealed) {
                    slotElement.classList.add('revealed');
                 }
             });
             
+            // تعطيل الضغط على الإجابات
             document.querySelectorAll('.answer-slot').forEach(slot => {
                 slot.style.pointerEvents = 'none';
             });
             
-            // إخفاء أزرار اللعب
+            // إخفاء أزرار الجولة وإظهار زر المتابعة
             nextStrikeBtn.classList.add('hidden');
             revealAllBtn.classList.add('hidden');
-            
-            // إظهار زر الانتقال للفاصل
             nextBtn.classList.remove('hidden');
             
             currentTurn = 'none'; 
@@ -829,6 +782,7 @@
         }
         
         function transferPoints(team) {
+            // تحويل نقاط الجولة (roundScore) إلى نقاط الفريق الفائز
             if (roundScore === 0) return;
 
             if (team === 'red') {
@@ -840,33 +794,14 @@
             updateScoreDisplays();
         }
 
-        function revealAllAnswersAndEnd() {
-            strikeFlashContainer.classList.add('hidden'); 
-            
-             questions[currentQuestionIndex].answers.forEach((ans, index) => {
-                const slotElement = answersBoard.querySelector(`[data-index='${index}']`);
-                if (slotElement && !ans.isRevealed) {
-                   slotElement.classList.add('revealed');
-                }
-            });
-            
-            roundScore = 0; 
-            strikes = MAX_STRIKES; 
-            updateScoreDisplays();
-            
-            // إنهاء الجولة
-            endRound(); 
-        }
-
         function goToNextIntermission() {
             currentQuestionIndex++;
             showIntermissionScreen();
         }
 
         function endGame() {
-            gameScreen.classList.add('hidden');
-            intermissionScreen.classList.add('hidden');
-            endScreen.classList.remove('hidden');
+            // إنهاء اللعبة وإظهار النتائج النهائية
+            showScreen(endScreen);
             
             const endMessage = document.getElementById('end-message');
 
@@ -883,44 +818,35 @@
         }
 
         function restartGame() {
-            scoreRed = 0;
-            scoreBlue = 0;
-            currentQuestionIndex = 0;
-            roundScore = 0;
-            strikes = 0;
-            currentTurn = 'none';
-            stealingMode = false;
+            // إعادة تشغيل اللعبة
             updateScoreDisplays();
-            
-            endScreen.classList.add('hidden');
-            startScreen.classList.remove('hidden');
+            showScreen(startScreen);
         }
 
 
         // =========================================================
-        // 8. معالجات الأحداث (Event Listeners)
+        // SECTION 10: معالجات الأحداث (Event Listeners)
         // =========================================================
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('start-game-btn').addEventListener('click', startGame);
+            // أزرار التحكم بالشاشات
+            document.getElementById('start-game-btn').addEventListener('click', initGame);
             document.getElementById('next-round-btn').addEventListener('click', prepareQuestion);
-            
-            startRedBtn.addEventListener('click', () => loadQuestion('red'));
-            startBlueBtn.addEventListener('click', () => loadQuestion('blue'));
-            
-            nextStrikeBtn.addEventListener('click', handleStrike);
-            nextBtn.addEventListener('click', goToNextIntermission);
+            document.getElementById('next-question-btn').addEventListener('click', goToNextIntermission);
             document.getElementById('restart-game-btn').addEventListener('click', restartGame);
-            revealAllBtn.addEventListener('click', revealAllAnswersAndEnd);
-            
-            // ربط زر السرقة الفاشلة بالدالة الجديدة
-            stealFailBtn.addEventListener('click', resolveStealFail); 
 
+            // أزرار الجولة والتحكم
+            document.getElementById('start-red-btn').addEventListener('click', () => loadQuestion('red'));
+            document.getElementById('start-blue-btn').addEventListener('click', () => loadQuestion('blue'));
+            document.getElementById('next-strike-btn').addEventListener('click', handleStrike);
+            document.getElementById('reveal-all-btn').addEventListener('click', endRound);
+            
+            // زر السرقة
+            document.getElementById('steal-fail-btn').addEventListener('click', resolveStealFail); 
+
+            // العرض الأولي عند التحميل
             updateScoreDisplays();
-            startScreen.classList.remove('hidden');
-            gameScreen.classList.add('hidden');
-            intermissionScreen.classList.add('hidden');
-            endScreen.classList.add('hidden');
+            showScreen(startScreen);
         });
 
     </script>
